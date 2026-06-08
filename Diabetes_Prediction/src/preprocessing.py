@@ -1,148 +1,11 @@
-from sklearn.preprocessing import LabelEncoder
-from scipy.stats import zscore
+from collections import Counter
+from utils import load_data
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 os.system("cls")
-
-
-# Load Data
-
-def load_data(path: str):
-
-    try:
-        return pd.read_csv(path)
-
-    except FileNotFoundError:
-        print("Dataset not found")
-        return None
-
-
-# Run EDA
-
-def run_eda(df, target_column):
-
-    basic_analysis(df)
-
-    target_analysis(df, target_column)
-
-    correlation_analysis(df, target_column)
-
-    df_fe = feature_engineering(df.copy())
-
-    feature_engineering_analysis(df_fe, target_column)
-
-
-# Basic Analysis
-
-def basic_analysis(df):
-
-    print("Dataset Shape :", df.shape)
-    print('\n')
-    print("First 5 Rows :\n", df.head())
-    print('\n')
-    print("Data Types :\n", df.dtypes)
-    print('\n')
-    print("Summary Statistics :\n", df.describe())
-    print('\n')
-    print("Missing Values :\n", df.isnull().sum())
-    print('\n')
-    print("Duplicates :", df.duplicated().sum())
-
-
-# Target Analysis
-
-def target_analysis(df, target_column):
-
-    if target_column not in df.columns:
-        return
-
-    print("\nTarget Distribution:")
-    print(df[target_column].value_counts())
-
-    print("\nTarget Percentage:")
-    print(df[target_column].value_counts(normalize=True)*100)
-
-
-# Correlation Analysis
-
-def correlation_analysis(df, target_column):
-
-    numeric_df = df.select_dtypes(include=["int64", "float64"])
-
-    corr = numeric_df.corr()[target_column]
-    print(f"\nCorrelation With {target_column}: \n",
-          corr.sort_values(ascending=False))
-
-
-# Undersampling
-
-def undersampling(df, target_column):
-
-    majority = df[df[target_column] == 0]
-    minority = df[df[target_column] == 1]
-
-    majority_under = majority.sample(n=3*len(minority), random_state=42)
-    balanced_df = pd.concat([majority_under, minority])
-
-    return balanced_df.sample(
-        frac=1,
-        random_state=42
-    ).reset_index(drop=true)
-
-
-# Feature Engineering
-
-def feature_engineering_analysis(df, target_column):
-
-    if target_column not in df.columns:
-        return
-
-    print("\n\nFeature Engineering Analysis: \n")
-
-    engineered_features = [
-        "BMI_Glucose",
-        "Age_BMI",
-        "High_Glucose",
-        "Obese",
-        "Senior"
-    ]
-
-    for feature in engineered_features:
-
-        if feature in df.columns:
-
-            corr = df[[feature, target_column]].corr().iloc[0, 1]
-
-            print(
-                f"{feature} correlation "
-                f"with {target_column}: "
-                f"{corr:.4f}"
-                "\n"
-            )
-
-
-# Undersampling
-
-def undersampling(df, target_column):
-
-    majority = df[df[target_column] == 0]
-    minority = df[df[target_column] == 1]
-
-    majority_downsampled = majority.sample(
-        n=len(minority),
-        random_state=42
-    )
-
-    balanced_df = pd.concat(
-        [majority_downsampled, minority]
-    )
-
-    return balanced_df.sample(
-        frac=1,
-        random_state=42
-    ).reset_index(drop=True)
 
 
 # Handling missing values
@@ -166,14 +29,23 @@ def remove_duplicates(df):
 
 # Handling Outliers
 
-def handling_outliers(df):
+def handling_outliers(df, target_column):
 
-    for col in ["age", "bmi"]:
+    numeric_cols = df.select_dtypes(include=["number"]).columns
 
-        if col in df.columns:
+    # REMOVE TARGET FROM OUTLIER PROCESSING
+    numeric_cols = [col for col in numeric_cols if col != target_column]
 
-            z = zscore(df[col])
-            df = df[abs(z) <= 3]
+    for col in numeric_cols:
+
+        q1 = df[col].quantile(0.25)
+        q3 = df[col].quantile(0.75)
+        iqr = q3 - q1
+
+        lower = q1 - 1.5 * iqr
+        upper = q3 + 1.5 * iqr
+
+        df[col] = df[col].clip(lower, upper)
 
     return df
 
@@ -181,16 +53,11 @@ def handling_outliers(df):
 # Encoding
 
 def encode_features(df):
-    if "gender" in df.columns:
 
-        gender_encoder = LabelEncoder()
-        df["gender"] = gender_encoder.fit_transform(df["gender"])
+    categorical_cols = df.select_dtypes(include=["object"]).columns
 
-    if "smoking_history" in df.columns:
-
-        smoking_encoder = LabelEncoder()
-        df["smoking_history"] = smoking_encoder.fit_transform(
-            df["smoking_history"])
+    if len(categorical_cols) > 0:
+        df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
 
     return df
 
@@ -236,16 +103,18 @@ def save_processed_data(df):
 
 def preprocess_data(df, target_column):
 
-    df = undersampling(df, target_column)
+    if target_column not in df.columns:
+        raise ValueError("Target column missing")
+    
     df = handle_missing_values(df)
 
     df = remove_duplicates(df)
 
-    df = handling_outliers(df)
-
-    df = encode_features(df)
+    df = handling_outliers(df, target_column)
 
     df = feature_engineering(df)
+
+    df = encode_features(df)
 
     save_processed_data(df)
 
@@ -255,7 +124,6 @@ def preprocess_data(df, target_column):
 
 
 if __name__ == "__main__":
-    df = load_data(
-        'Diabetes_Prediction\data\Raw\diabetes_prediction_dataset.csv')
-    run_eda(df, "Outcome")
+    df = load_data('diabetes_prediction_dataset.csv')
     preprocess_data(df, "Outcome")
+
