@@ -1,12 +1,10 @@
-from collections import Counter
 from utils import load_data
+from sklearn.preprocessing import OneHotEncoder
 
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
+import joblib
 import os
-os.system("cls")
-
+os.system("cls" if os.name == "nt" else "clear")
 
 # Handling missing values
 
@@ -32,10 +30,13 @@ def remove_duplicates(df):
 def handling_outliers(df, target_column):
 
     numeric_cols = df.select_dtypes(include=["number"]).columns
-
-    # REMOVE TARGET FROM OUTLIER PROCESSING
     numeric_cols = [col for col in numeric_cols if col != target_column]
-
+    if target_column:
+        numeric_cols = [
+            col
+            for col in numeric_cols
+            if col != target_column
+        ]
     for col in numeric_cols:
 
         q1 = df[col].quantile(0.25)
@@ -52,12 +53,56 @@ def handling_outliers(df, target_column):
 
 # Encoding
 
-def encode_features(df):
+def encode_features(df, fit=True):
 
-    categorical_cols = df.select_dtypes(include=["object"]).columns
+    categorical_cols = ["gender", "smoking_history"]
 
-    if len(categorical_cols) > 0:
-        df = pd.get_dummies(df, columns=categorical_cols, drop_first=True)
+    if fit:
+        encoder = OneHotEncoder(
+            handle_unknown="ignore",
+            sparse_output=False
+        )
+
+        encoded = encoder.fit_transform(
+            df[categorical_cols]
+        )
+
+        joblib.dump(
+            encoder,
+            "Diabetes_Prediction/models/encoder.pkl"
+        )
+
+    else:
+
+        encoder = joblib.load(
+            "Diabetes_Prediction/models/encoder.pkl"
+        )
+
+        encoded = encoder.transform(
+            df[categorical_cols]
+        )
+
+    encoded_columns = encoder.get_feature_names_out(
+        categorical_cols
+    )
+
+    encoded_df = pd.DataFrame(
+        encoded,
+        columns=encoded_columns
+    )
+
+    numeric_df = df.drop(
+        categorical_cols,
+        axis=1
+    )
+
+    df = pd.concat(
+        [
+            numeric_df.reset_index(drop=True),
+            encoded_df.reset_index(drop=True)
+        ],
+        axis=1
+    )
 
     return df
 
@@ -96,7 +141,7 @@ def save_processed_data(df):
 
     os.makedirs("Data/Processed", exist_ok=True)
 
-    df.to_csv("Data/Processed/processed_data.csv", index=False)
+    df.to_csv("Diabetes_Prediction\data\Processed\processed_data.csv", index=False)
 
 
 # Master Function
@@ -120,10 +165,15 @@ def preprocess_data(df, target_column):
 
     X, y = split_features_target(df, target_column)
 
+    joblib.dump(
+        X.columns.tolist(),
+        "Diabetes_Prediction/models/feature_columns.pkl"
+    )
+
     return X, y
 
 
 if __name__ == "__main__":
-    df = load_data('diabetes_prediction_dataset.csv')
+    df = load_data(r'Diabetes_Prediction\data\Raw\diabetes_prediction_dataset.csv')
     preprocess_data(df, "Outcome")
 

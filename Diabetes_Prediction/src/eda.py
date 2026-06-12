@@ -96,7 +96,8 @@ def feature_engineering_analysis(df, target_column):
             )
     return df
 
+
 if __name__ == "__main__":
-    df = load_data("diabetes_prediction_dataset.csv")
+    df = load_data(r"Diabetes_Prediction\data\Raw\diabetes_prediction_dataset.csv")
     run_eda(df,"Outcome")
 
