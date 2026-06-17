@@ -140,6 +140,6 @@ print(xgb_params_best)
 
 # -----Saving best_model-----
 
-joblib.dump(best_model, r'Diabetes_Prediction\models\diabetes_model.pkl')
+joblib.dump(best_model, r'Diabetes_Prediction\artifacts\diabetes_model.pkl')
 
 
