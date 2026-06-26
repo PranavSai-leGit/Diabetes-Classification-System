@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("../images/Login.jpg");
+    background-size: 100%;
+    background-position: left;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container,
+.register-container{
+    width: 25%;
+    height: auto;
+    
+    background: rgb(255, 255, 255);
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+.login-container,
+.register-container h1{
+    text-align: center;
+    color:#474444 ;
+    margin-bottom: 30px;
+
+}
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #ada9a9;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 18px;
+    user-select: none;
+}
+.input-box :hover{
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+
+}
+
+.input-box input {
+    width: 100%;
+
+    padding: 14px 45px 14px 45px;
+
+    border: 1px solid #d0d7de;
+    border-radius: 20px;
+    font-size: 15px;
+
+    outline: none;
+}
+
+.input-box input:focus {
+    border-color: #d4ddf0;
+}
+
+.icon {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #615f5f;
+}
+
+.icon-right {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #666;
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 20px;
+
+    background: #114ccc;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0f318f;
+    color: rgba(255, 255, 255, 0.788);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.signup-text {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.signup-text a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
+.input-box {
+    position: relative;
+}
+
+.icon-button {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: none;
+
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    opacity: 0.7;
+}
+#toggle {
+    width: 15%;
+    right: 1px;
+    padding: 12px;
+    size :50%;
+    border-radius: 100px;
+    box-shadow: none;
+    background-color: transparent;
+
+    transition: 0.2s;
+}
+#error-message{
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+.password-info{
+    display: flex;
+    justify-content: space-between;
+    
+
+}
+.password-info span{
+    
+    position: absolute;
+    color: #1d23315b;
+    left: 41.2%;
+    top: 50%;
+    font-size: 100%;
+
+
+    transform: translateY(453%);
+
+    border: none;
+    background: none;
+
+    cursor: pointer;
+
+}
+    
+
+.password-info p{
+    position: relative;
+        transform: translateY(-35%);
+        right: 85px;
+        user-select: none;
+        color: #ada9a9;
+        padding: 10px;
+        font-size: 90%;
+
+}
+.tooltip{
+    position: absolute;
+    left: 30px;
+    top: 0;
+
+    width: 220px;
+    padding: 10px;
+
+    background: #333;
+    color: white;
+
+    border-radius: 8px;
+
+    display: none;
+}
+
+.info-container:hover .tooltip{
+    display: block;
+}
+#forgot-password{
+    position: relative;
+    text-align: left;
+    left:10px;
+    font-size: small;
+    transform: translateY(-100%);
+    font-weight:normal;
+    color: #0e0863;
+    cursor: pointer;
+    text-decoration: none;
+
+    
+}
+#forgot-password :hover{
+    color: red;
+    text-decoration: underline;
+}
+#info{
+    width: 5%;
+    height: 5%;
+    right: 10px;
+    size :10%;
+    border-radius: 50px;
+    box-shadow: none;
+    background-color:transparent;
+    transition: 0.2s;
+}

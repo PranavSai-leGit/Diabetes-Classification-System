@@ -22,18 +22,46 @@ A FastAPI-based machine learning application that predicts whether a person is d
 - Scikit-Learn
 - Pydantic
 - Uvicorn
+- HTML
+- CSS
+- Javascript
 
 ## Project Structure
 
 ```text
 diabetes_project/
 │
+├── main.py
+├── schemas.py
 ├── database.py
 ├── models.py
-├── schemas.py
 ├── crud.py
-├── main.py
+├── security.py
 │
+├── templates/
+│   ├── components/
+│   │   └── sidebar.html
+│   ├── home.html
+│   ├── login.html
+│   ├── register.html
+│   └── predict.html
+│
+├── static/
+│   ├── css/
+│   │   ├── auth.css
+│   │   ├── predict.css
+│   │   └── sidebar.html
+│   │
+│   ├── images/
+│   │   ├── favicon.png
+│   │   └── Login.jpg
+│   │
+│   └── js/
+│       ├── login.js
+│       ├── register.js
+│       ├── predict.js
+│       └── sidebar.html
+│   
 ├── src/
 │   ├── predict.py
 │   ├── utils.py

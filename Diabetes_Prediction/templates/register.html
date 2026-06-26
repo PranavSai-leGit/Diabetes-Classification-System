@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <link rel="stylesheet" href="../static/css/auth.css">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+    
+    <title>Register Page</title>
+
+</head>
+
+<body>
+    <div class="register-container">
+        <h1 class="register-title">Register</h1>
+        <form id="register-form">
+            <div class="input-box">
+                <span class="material-symbols-outlined icon">
+                    person
+                </span>
+                <input 
+                id="username"
+                type="text"
+                placeholder="Username"
+                required>
+
+            </div>
+
+            <div class="input-box">
+                <span class=" material-symbols-outlined icon">
+                    mail
+                </span>
+                <input
+                id="email"
+                type="email"
+                placeholder="Email ID"
+                required>
+
+            </div>
+            <div class="input-box">
+
+                <span class="material-symbols-outlined icon">
+                    password
+                </span>
+
+                <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                required>
+
+                <button id="toggle" class="icon-button" type="button">
+                    <span id="vis" class="material-symbols-outlined icon-right">
+                        visibility_off
+                    </span>
+                </button>
+            </div>
+            <div class="password-info">
+                <button id="info" type="button">
+                <span class="material-symbols-outlined icon">
+                    info
+                </span>
+                </button>
+                <p>Password constraints</p>
+                    <div class="tooltip">
+                        Password must:<br>
+                        • Be at least 8 characters<br>
+                        • Contain a number<br>
+                        • Contain a special character
+                    </div>
+            </div>
+
+                <button type="submit">
+                    Sign Up
+                </button>
+                <p id="error-message"></p>
+                <p class="signup-text">Already have an account?
+                    <a href="login">Sign in</a>
+                </p>
+
+        </form>
+    </div>
+    <script src="../static/js/register.js"></script>
+</body>
+</html>

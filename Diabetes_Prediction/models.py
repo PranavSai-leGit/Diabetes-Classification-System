@@ -32,7 +32,7 @@ class User(Base):
         unique = True,
         nullable = False
     )
-    password = Column(
+    password_hash = Column(
         String(255),
         nullable = False
     )

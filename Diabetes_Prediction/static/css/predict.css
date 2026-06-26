@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("../images/Login.jpg");    
+    background-size: 100%;
+    background-position: left;
+    background-repeat: no-repeat;
+
+    height: 100vh;
+    display: flex;
+    min-height: 100vh;
+
+}
+
+.predict-container{
+    background: rgba(195, 190, 216, 0.22);
+    
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.1px);
+    -webkit-backdrop-filter: blur(7.1px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    color: rgb(151, 179, 221);
+    width: 400px;
+    padding: 14px;
+    border-radius: 20px;
+    transition: 0.3s;
+
+
+    margin-left:auto;
+    margin-right: 400px;
+    user-select: none;
+
+}
+
+.predict-container h1{
+    text-align: center;
+    color:#d8cdcd ;
+    margin-bottom: 30px;
+
+}
+
+.subtitle {
+    text-align: center;
+    color: #ada9a9;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 15px;
+    padding: 9px;
+    user-select: none;
+
+}
+
+.input-box :hover{
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: 0.3s;
+
+}
+
+.input-box input {
+    width: 100%;
+
+    padding: 14px 45px 14px 45px;
+
+    border: 1px solid #d0d7de;
+    border-radius: 24px;
+    font-size: 15px;
+
+
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.1px);
+    -webkit-backdrop-filter: blur(7.1px);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    outline: none;
+}
+
+.input-box input:focus {
+    border-color: #d4ddf0;
+}
+
+.icon {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #615f5f;
+}
+
+.icon-right {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #666;
+    cursor: pointer;
+}
+
+button {
+    position: center;
+    width: 95%;
+    padding: 14px;
+    border-radius: 20px;
+
+
+    background: rgba(195, 190, 216, 0.22);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.1px);
+    -webkit-backdrop-filter: blur(7.1px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    
+
+    background: #1258eee1;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0f318f;
+    color: rgba(255, 255, 255, 0.788);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.input-box {
+    position: relative;
+}
+
+#error-message{
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+

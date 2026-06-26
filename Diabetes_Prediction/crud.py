@@ -1,10 +1,13 @@
 from models import User, Prediction
+from security import hash_password
 
 def create_user(db, user):
+
+    password_hash = hash_password(user.password)
     new_user = User(
         username = user.username,
         email = user.email,
-        password = user.password
+        password_hash = password_hash
     )
     db.add(new_user)
     db.commit()

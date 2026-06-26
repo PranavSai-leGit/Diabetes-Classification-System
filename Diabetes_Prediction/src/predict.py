@@ -42,12 +42,12 @@ def predict(df):
     processed_data = preprocess_prediction_data(df)
 
     # Model predicions
-    probability = model.predict_proba(processed_data)[:, 1]
-    prediction = (probability >= 0.25).astype(int)
+    probability = model.predict_proba(processed_data)
+    prediction = int(probability[0][1] >= 0.25)
 
     return {
-        "prediction": "Diabetic" if prediction[0] == 1 else "Non-Diabetic",
-        "confidence": float(probability[0])
+        "prediction": "Diabetic" if prediction == 1 else "Non-Diabetic",
+        "confidence": float(probability[0][prediction])
     }
 
 
