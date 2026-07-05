@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("../images/Background.jpg");    
+    background-size: cover;
+    background-position: left;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-container {
+    position: fixed;
+    
+    max-height: 95vh;
+    overflow-y: auto;
+    
+    background: rgba(195, 190, 216, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    color: #e2e8f0;
+    width: 80%;
+    padding: 30px;
+    border-radius: 24px;
+    
+    margin-left: 24%;
+    margin-right: 10%;
+    min-width: 100px;
+    max-width: 1000px;
+    user-select: none;
+}
+
+.dashboard-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dashboard-container::-webkit-scrollbar-track {
+    background: transparent; /* Makes the track invisible */
+    border-radius: 10px;
+    margin-block: 15px; /* Adds some padding at the top and bottom of the scrollbar track */
+}
+
+.dashboard-container::-webkit-scrollbar-thumb {
+    background: rgba(195, 190, 216, 0.3); /* Matches your glass card border/background */
+    border-radius: 10px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(195, 190, 216, 0.6); /* Highlights when hovered */
+}
+
+.dashboard-container h1 {
+    text-align: left;
+    color: #d1c7c7;
+    margin-bottom: 25px;
+    font-size: 2rem;
+}
+#user-info {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+/* Shared Glass Card Styles */
+.glass-card {
+    background: rgba(25, 64, 114, 0.432);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    border-radius: 24px;
+    padding: 25px;
+    color: #e2e8f0;
+    flex: 1; /* Makes both cards share the row 50/50 */
+    min-width: 300px; /* Prevents them from getting too squished */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.glass-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+.glass-card h2 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+/* Added layout classes for the Chart and Stats combo */
+.stats-content-row {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+/* Update chart section to anchor the absolute positioned text */
+.chart-section {
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Crucial for the text overlay */
+    min-height: 180px;  /* Ensure it has height */
+}
+
+/* Container for the centered text */
+.chart-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none; /* Allows the mouse to interact with the chart behind it */
+    width: 100%;
+}
+
+/* Shared styles for both text states */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.center-content .value {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.2;
+    transform: translateY(30%);
+}
+
+.center-content .label {
+    font-size: 1rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(60%);
+
+}
+
+/* Default State (Total) */
+.static-content {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* Hidden Hover State (Average Confidence) */
+.hover-content {
+    opacity: 0;
+    transform: translate(-50%, 20px); /* Starts slightly lower for a slide-up effect */
+}
+
+/* The Magic: When hovering the chart section, swap the texts */
+.chart-section:hover .static-content {
+    opacity: 0;
+    transform: translate(-50%, -20%); /* Slides up and fades out */
+}
+
+.chart-section:hover .hover-content {
+    opacity: 1;
+    transform: translate(-50%, 0); /* Slides into place and fades in */
+}
+
+.stat-caption {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+/* Top Row (Full Width) */
+.full-width-row {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* 2-Column Grid for remaining cards */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    width: 100%;
+}
+
+
+
+/* Ensure the grid takes up the remaining space */
+.metrics-grid {
+    flex: 1; 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+.metric-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.metric-box:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* --- RECENT PREDICTION LIST --- */
+.status-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 14px; 
+    margin-top: auto; 
+    margin-bottom: auto;
+}
+.status-item { 
+    display: flex;
+    justify-content: space-between; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+}
+.status-item:last-child { 
+    border-bottom: none; 
+    padding-bottom: 0; 
+}
+.status-label { 
+    color: #94a3b8; 
+    font-size: 14px; 
+}
+.status-value { 
+    color: #ffffff; 
+    font-size: 14px; font-weight: 500; 
+}
+
+/* --- CSS HORIZONTAL BAR CHARTS --- */
+.css-bar-container { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-top: 10px; 
+    flex: 1; 
+    justify-content: center; 
+}
+.css-bar-row { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
+.bar-label { 
+    width: 90px; 
+    font-size: 0.85rem; 
+    color: #cbd5e1; 
+}
+.bar-track { 
+    flex: 1; 
+    height: 10px; 
+    background: rgba(255, 255, 255, 0.05); 
+    border-radius: 5px; 
+    overflow: hidden; 
+}
+.bar-fill { height: 100%; border-radius: 5px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); width: 0%; }
+.bar-value { width: 45px; text-align: right; font-size: 0.85rem; font-weight: bold; color: #ffffff; }
+
+/* Custom Colors for Bar Charts */
+.age-fill { background: linear-gradient(90deg, #6366f1, #8b5cf6); }
+.glucose-fill { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+.bmi-fill { background: linear-gradient(90deg, #10b981, #34d399); }
+
+/* --- RISK SCORES STACKED BAR --- */
+.risk-section { display: flex; flex-direction: column; justify-content: center; flex: 1;}
+.risk-bar-container { display: flex; width: 100%; height: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden; margin-bottom: 25px; }
+.risk-segment { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); width: 0%;}
+.segment-low { background: rgba(14, 228, 14, 0.8); }
+.segment-med { background: rgba(234, 179, 8, 0.8); }
+.segment-high { background: rgba(241, 29, 29, 0.8); }
+.risk-labels { display: flex; justify-content: space-between; width: 100%; }
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-low { background: rgba(14, 228, 14, 1); }
+.dot-med { background: rgba(234, 179, 8, 1); }
+.dot-high { background: rgba(241, 29, 29, 1); }
+.legend-text { display: flex; flex-direction: column; }
+.legend-title { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+.legend-value { font-size: 0.9rem; font-weight: bold; color: #ffffff; }
+
+/* --- CHART CONTAINERS --- */
+.chart-wrapper { position: relative; height: 200px; width: 100%; display: flex; justify-content: center; align-items: center; flex: 1; }
+
+/* --- PAST PREDICTIONS TABLE --- */
+.history-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.history-table th, .history-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+.history-table th { color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.badge { padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.75rem; text-align: center; display: inline-block;}
+.badge-pos { background: rgba(241, 29, 29, 0.2); color: #fca5a5; border: 1px solid rgba(241, 29, 29, 0.3); }
+.badge-neg { background: rgba(14, 228, 14, 0.2); color: #86efac; border: 1px solid rgba(14, 228, 14, 0.3); }

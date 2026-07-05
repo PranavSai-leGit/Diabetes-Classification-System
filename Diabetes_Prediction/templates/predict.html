@@ -26,115 +26,153 @@
         {% include "components/sidebar.html" %}
 
         <div class="predict-container">
-            <h1 class="predict-title";">Prediction</h1>
+            <h1 class="predict-title">Prediction</h1>
             <form id="predict-form">
 
-                <!--Gender input-->
-                <div class="input-box">
-                    <label for="gender">Gender</label>
-                    <select id="gender" name="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
+                <div class="input-group">
 
-                <!--Age input-->
-                </div>
-                <div class="input-box">
-                    <input
-                    id="age"
-                    type="number"
-                    min="1"
-                    max="120"
-                    step="1"
-                    placeholder="Age"
-                    required>
+                    <label for="gender" class="field-label">Gender</label>
+                    <div class="select-wrapper">
+                        <select id="gender" name="gender">
+                            <option value="" disabled selected hidden style="color: rgb(29, 76, 117);">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!--Hypertension input-->
-                <div>
-                    Hypertension
-                    <label>
-                        <input type="radio" name="hypertension" value="1" required>
-                            Yes
-                    </label>
+                <div class="input-group">
 
-                    <label>
-                        <input type="radio" name="hypertension" value="0">
-                            No
-                    </label>
+                    <label for="age" class="field-label">Age</label>
+                    <div class="input-box">
+                        <input 
+                        id="age" 
+                        type="number" 
+                        min="1" 
+                        max="120" 
+                        oninput="if(this.value.length > 3) this.value = this.value.slice(0, 3);" 
+                        step="1" 
+                        placeholder="Enter age" 
+                        required>
+                    </div>
                 </div>
 
-                <!--Heart Disease input-->
-                <div>
-                    Heart Disease
-                    <label>
-                        <input type="radio" name="heart_disease" value="1" required>
-                            Yes
-                    </label>
+                <div class="input-group">
 
-                    <label>
-                        <input type="radio" name="heart_disease" value="0">
-                            No
-                    </label>
+                    <label class="field-label">Hypertension</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="hypertension" 
+                            value="1" 
+                            required>
+                            <span class="custom-radio"></span> Yes
+                        </label>
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="hypertension" 
+                            value="0">
+                            <span class="custom-radio"></span> No
+                        </label>
+                    </div>
                 </div>
 
-                <!--Smoking input-->
-                <div>
-                    <label for="smoking_history">Smoking History</label>
-                    <select id="smoking_history" name="smoking_history">
-                        <option value="current">Current</option>
-                        <option value="former">Former</option>
-                        <option value="never">Never</option>
-                        <option value="not current">Not current</option>
-                        <option value="No Info">No Info</option>
-                    </select>
+                <div class="input-group">
+
+                    <label class="field-label">Heart Disease</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="heart_disease" 
+                            value="1" 
+                            required>
+                            <span class="custom-radio"></span> Yes
+                        </label>
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="heart_disease" 
+                            value="0">
+                            <span class="custom-radio"></span> No
+                        </label>
+                    </div>
                 </div>
 
-                <!--BMI input-->
-                <div class="input-box">
-                    <input 
-                    id="bmi"
-                    type="number"
-                    min="10"
-                    max="90"
-                    step="0.1"
-                    placeholder="BMI"
-                    required>
+                <div class="input-group">
 
+                    <label for="smoking_history" class="field-label">Smoking History</label>
+                    <div class="select-wrapper">
+                        <select id="smoking_history" name="smoking_history">
+                            <option value="" disabled selected hidden>Select smoking history</option>
+                            <option value="current">Current</option>
+                            <option value="former">Former</option>
+                            <option value="never">Never</option>
+                            <option value="not current">Not current</option>
+                            <option value="No Info">No Info</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!--HbA1c input-->
-                <div class="input-box">
-                    <input
-                    id="HbA1c_level"
-                    type="number"
-                    step="0.1"
-                    placeholder="HbA1c level"
-                    required>
+                <div class="input-group">
+
+                    <label for="bmi" class="field-label">BMI</label>
+                    <div class="input-box">
+                        <input 
+                        id="bmi" 
+                        type="number" 
+                        min="10" 
+                        max="90" 
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^(\d{2})(\d)/, '$1.$2').slice(0, 4);"
+                        step="0.1" 
+                        placeholder="Enter BMI" 
+                        required>
+                    </div>
                 </div>
 
-                <!--Glucose input-->
-                <div class="input-box">
-                    <input
-                    id="blood_glucose_level"
-                    type="number"
-                    min="1"
-                    max="800"
-                    step="1"
-                    placeholder="Blood Glucose Level"
-                    required>
+                <div class="input-group">
+
+                    <label for="HbA1c_level" class="field-label">HbA1c Level</label>
+                    <div class="input-box">
+                        <input 
+                        id="HbA1c_level" 
+                        type="number" 
+                        oninput="if(this.value.length > 3) this.value = this.value.slice(0, 3);" 
+                        step="0.1" 
+                        placeholder="Enter HbA1c level" 
+                        required>
+                    </div>
                 </div>
 
-                <!--Button-->
-                <button type="submit" style="margin-top: 10px;">
-                    Predict
-                </button>
-                <p id="error-message"></p>
-                <p id="prediction"></p>
+                <div class="input-group">
 
-            </form>
+                    <label for="blood_glucose_level" class="field-label">Blood Glucose Level</label>
+                    <div class="input-box">
+                        <input 
+                        id="blood_glucose_level" 
+                        type="number" 
+                        min="1" 
+                        max="800" 
+                        oninput="if(this.value.length > 3) this.value = this.value.slice(0, 3);" 
+                        step="1" 
+                        placeholder="Enter glucose level" 
+                        required>
+                    </div>
+                </div>
 
-        </div>
+                <div class="form-actions">
+                    <div class="button-group">
+                        <button id="predict-btn" type="submit">Predict</button>
+                        <button id="clear-btn" type="reset" style="background-color: rgba(224, 15, 15, 0.795) ">Clear</button>
+                    </div>
+                    <p id="error-message"></p>
+                    <p id="prediction"></p>
+                </div>
+
+    </form>
+</div>
         <script src="../static/js/predict.js"></script>
     </body>
 

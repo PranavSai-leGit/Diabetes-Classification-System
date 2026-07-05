@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+        <link rel="stylesheet" href="../static/css/history.css">
+
+
+        <title>History Page</title>
+    </head>
+
+    <body>
+        <!--Check for token-->
+        <script>
+            const token = localStorage.getItem("token");
+
+            if(!token) {
+                window.location.replace("http://127.0.0.1:8000/login");
+                alert("Please Log In");
+            }
+
+        </script>
+
+        {% include "components/sidebar.html" %}
+        <div class="history-container">
+            <h1 class="history-title">Prediciton History</h1>
+
+            <div class="select-wrapper">
+                <label for="status-filter"><strong>Filter: </strong></label>
+                    <select id="status-filter" onchange="applyFilter()">
+                        <option value="All">All</option>
+                        <option value="Diabetic">Diabetic</option>  
+                        <option value="Non-Diabetic">Non-Diabetic</option>
+                    </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>Prediction</th>
+                            <th>Confidence</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="history-table-body"></tbody>
+                </table>
+                <div id="pagination-controls">
+                    <button id="prev-btn" onclick="changePage(-1)">Previous</button>
+                    <span id="page-info">Page 1</span>
+                    <button id="next-btn" onclick="changePage(1)">Next</button>
+                </div>
+            </div>
+            <p id="loading-message">Loading your history...</p>
+            <p id="error-message" style="color: #9c1414; display: none;"></p>
+        </div>
+
+        <script src="../static/js/history.js"></script>
+
+    </body>
+</html>

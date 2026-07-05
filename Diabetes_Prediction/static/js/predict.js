@@ -1,3 +1,18 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token || isTokenExpired(token)) {
+        localStorage.removeItem("token");
+        alert("Session expired. Please Login again");
+        window.location.replace("/login");
+}
+});
+function isTokenExpired(token) {
+
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        return payload.exp * 1000 < Date.now();
+    }
+
 document.getElementById("predict-form").addEventListener("submit", async (e) => {
     
     e.preventDefault();
@@ -59,4 +74,25 @@ document.getElementById("predict-form").addEventListener("submit", async (e) => 
                             <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%`;
 
 
+})
+
+document.querySelectorAll('input[type="number"]').forEach(input => {
+
+    input.addEventListener("keydown", e => {
+        if (e.key === "-") {
+            e.preventDefault();
+        }
+    });
+
+    input.addEventListener("input", () => {
+        if (Number(input.value) < 0) {
+            input.value = "";
+        }
+    });
+
+});
+
+document.getElementById("predict-form").addEventListener("reset", function() {
+    prediction = document.getElementById("prediction");
+    prediction.innerHTML = "";
 })

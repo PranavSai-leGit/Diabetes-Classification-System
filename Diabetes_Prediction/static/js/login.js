@@ -1,26 +1,18 @@
-document.getElementById("toggle")
-.addEventListener("click", function() {
+document.getElementById("toggle").addEventListener("click", function() {
 
-    const password =
-        document.getElementById("password");
-
-    const vis =
-        document.getElementById("vis");
+    const password = document.getElementById("password");
+    const vis = document.getElementById("vis");
 
     if (password.type === "password") {
 
         password.type = "text";
-
         vis.textContent = "visibility";
-
-    } else {
+    }
+    else {
 
         password.type = "password";
-
         vis.textContent = "visibility_off";
-
     }
-
 });
 
 document.getElementById("login-form").addEventListener("submit", async (e)=>{
@@ -59,7 +51,7 @@ document.getElementById("login-form").addEventListener("submit", async (e)=>{
     );
 
     if(response.ok){
-        window.location.replace("/predict");
+        window.location.replace("/home");    
     }
 });
 

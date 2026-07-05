@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+        <link rel="stylesheet" href="../static/css/profile.css">
+
+
+        <title>Profile</title>
+    </head>
+
+    <body>
+        <!--Check for token-->
+        <script>
+            const token = localStorage.getItem("token");
+
+            if(!token) {
+                window.location.replace("http://127.0.0.1:8000/login");
+                alert("Please Log In");
+            }
+
+        </script>
+
+        {% include "components/sidebar.html" %}
+
+<div class="profile-container">
+    <h1 class="profile-title">Profile</h1>
+    
+    <div class="profile-grid">
+        
+        <div class="left-column">
+            
+            <div id="details-container" class="glass-card" style="height: 50%;">
+                <img class="profile-pic" src="../static/images/Profile-icon.webp" alt="Profile Picture">
+                <div id="profile-info" class="profile-info-block"></div>
+            </div>
+            <div class="glass-card">
+                <h2>Account Settings</h2>
+                <div class="settings-list">
+                    <button class="settings-btn">Change Username</button>
+                    <button class="settings-btn">Change Email</button>
+                    <button class="settings-btn">Change Password</button>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="right-column">
+            
+            <div class="glass-card">
+                <h2>Account Statistics</h2>
+                <div class="status-list">
+                    <div class="status-item">
+                        <span class="status-label">Total Predictions</span>
+                        <span id="total_predictions" class="status-value"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Positive</span>
+                        <span id="total_positives" class="status-value" style="color: #0ee40eb7;"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Negative</span>
+                        <span id="total_negatives" class="status-value" style="color: #f11d1db2;"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Average Confidence</span>
+                        <span id="average_confidence" class="status-value"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card action-card">
+                <button class="action-btn btn-primary">Save Changes</button>
+                <button class="action-btn btn-secondary">Logout</button>
+                <button class="action-btn btn-danger">Delete Account</button>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+        <script src="../static/js/profile.js"></script>
+    </body>
+
+</html>

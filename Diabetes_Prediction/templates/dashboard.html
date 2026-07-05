@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+        <link rel="stylesheet" href="../static/css/dashboard.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <title>Dashboard</title>
+
+    </head>
+
+    <body>
+        <!--Check for token-->
+        <script>
+            const token = localStorage.getItem("token");
+
+            if(!token) {
+                window.location.replace("http://127.0.0.1:8000/login");
+                alert("Please Log In");
+            }
+
+        </script>
+
+        {% include "components/sidebar.html" %}
+
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Dashboard</h1>
+            <h2 id="user-info">Loading user...</h2>
+    
+            <!-- ================= TOP ROW: Full Width Stats ================= -->
+            <div class="full-width-row">
+                <div class="glass-card" style="padding: 30px;">
+                    <h2>Recent Inference Stats</h2>
+                    <p class="stat-caption">Live usage statistics from the last 30 days.</p>
+    
+                    <div class="stats-content-row">
+                            
+                        <div class="chart-section">
+                            <canvas id="predictionChart"></canvas>
+    
+                            <div class="chart-center-text">
+                                <div class="center-content static-content">
+                                    <span class="value" id="center-total">0</span>
+                                    <span class="label">Total Predictions</span>
+                                </div>
+                                <div class="center-content hover-content">
+                                    <span class="value" id="center-avg">0%</span>
+                                    <span class="label">Avg Confidence</span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <div id="total_predictions" class="metric-value">--</div>
+                                <div class="metric-label">Total Predictions</div>
+                            </div>
+                            <div class="metric-box">
+                                <div id="average_confidence" class="metric-value" style="color: #e7e3e3;">--</div>
+                                <div class="metric-label">Avg Confidence</div>
+                            </div>
+                            <div class="metric-box">
+                                <div id="total_positives" class="metric-value" style="color: #4ade80;">--</div>
+                                <div class="metric-label">Positives</div>
+                            </div>
+                            <div class="metric-box">
+                                <div id="total_negatives" class="metric-value" style="color: #f87171;">--</div>
+                                <div class="metric-label">Negatives</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- ================= BOTTOM SECTION: 2-Column Grid ================= -->
+            <div class="dashboard-grid">
+                
+                <div class="glass-card">
+                    <h2>Recent Prediction</h2>
+                    <p class="stat-caption" style="margin-bottom: 15%;">Your last Prediction.</p>
+    
+                    <div class="status-list">
+        
+                        <div class="status-item">
+                            <div class="status-label">Prediction</div>
+                            <div id="last_prediction" class="status-value"></div>
+                        </div>
+        
+                        <div class="status-item">
+                            <div class="status-label">Confidence</div>
+                            <div id="confidence" class="status-value"></div>
+                        </div>
+        
+                        <div class="status-item">
+                            <div class="status-label">Time</div>
+                            <div id="time-stamp" class="status-value"></div>
+                        </div>
+        
+                    </div>
+                </div>
+    
+                <div class="glass-card">
+                    <h2>Risk Scores</h2>
+                    <p class="stat-caption">Distribution of prediction risks.</p>
+    
+                    <div class="risk-section">
+    
+                        <div class="risk-bar-container">
+                            <div id="bar-low" class="risk-segment segment-low"></div>
+                            <div id="bar-med" class="risk-segment segment-med"></div>
+                            <div id="bar-high" class="risk-segment segment-high"></div>
+                        </div>
+    
+                        <div class="risk-labels">
+                            <div class="legend-item"><span class="dot dot-low"></span><div class="legend-text"><span class="legend-title">Low</span><span id="label-low" class="legend-value">0%</span></div></div>
+                            <div class="legend-item"><span class="dot dot-med"></span><div class="legend-text"><span class="legend-title">Medium</span><span id="label-med" class="legend-value">0%</span></div></div>
+                            <div class="legend-item"><span class="dot dot-high"></span><div class="legend-text"><span class="legend-title">High</span><span id="label-high" class="legend-value">0%</span></div></div>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <!-- ROW 2: Age Distribution & Gender Distribution -->
+                <div class="glass-card">
+                    <h2>Age Group Distribution</h2>
+                    <p class="stat-caption">Demographic breakdown by age.</p>
+    
+                    <div class="css-bar-container">
+                        <div class="css-bar-row">
+                            <span class="bar-label">0-20</span>
+                            <div class="bar-track">
+                                <div id="age-1" class="bar-fill age-fill"></div>
+                            </div>
+                            <span id="age-val-1" class="bar-value">0%</span>
+                        </div>
+
+                        <div class="css-bar-row">
+                            <span class="bar-label">21-40</span>
+                            <div class="bar-track">
+                                <div id="age-2" class="bar-fill age-fill"></div>
+                            </div>
+                            <span id="age-val-2" class="bar-value">0%</span>
+                        </div>
+                        <div class="css-bar-row"><span class="bar-label">41-60</span><div class="bar-track"><div id="age-3" class="bar-fill age-fill"></div></div><span id="age-val-3" class="bar-value">0%</span></div>
+                        <div class="css-bar-row"><span class="bar-label">61-80</span><div class="bar-track"><div id="age-4" class="bar-fill age-fill"></div></div><span id="age-val-4" class="bar-value">0%</span></div>
+                    </div>
+    
+                </div>
+    
+                <div class="glass-card">
+                    <h2>Gender Distribution</h2>
+                    <p class="stat-caption">Ratio of Male to Female subjects.</p>
+    
+                    <div class="chart-wrapper">
+                        <canvas id="genderChart"></canvas>
+                    </div>  
+    
+                </div>
+    
+                <!-- ROW 3: Avg Glucose by Age & BMI Category -->
+                <div class="glass-card">
+                    <h2>Avg Glucose by Age</h2>
+                    <p class="stat-caption">Mean glucose levels (mg/dL) per group.</p>
+    
+                    <div class="css-bar-container">
+                        <div class="css-bar-row"><span class="bar-label">20-30</span><div class="bar-track"><div id="gluc-1" class="bar-fill glucose-fill"></div></div><span id="gluc-val-1" class="bar-value">0</span></div>
+                        <div class="css-bar-row"><span class="bar-label">31-40</span><div class="bar-track"><div id="gluc-2" class="bar-fill glucose-fill"></div></div><span id="gluc-val-2" class="bar-value">0</span></div>
+                        <div class="css-bar-row"><span class="bar-label">41-50</span><div class="bar-track"><div id="gluc-3" class="bar-fill glucose-fill"></div></div><span id="gluc-val-3" class="bar-value">0</span></div>
+                        <div class="css-bar-row"><span class="bar-label">51-60</span><div class="bar-track"><div id="gluc-4" class="bar-fill glucose-fill"></div></div><span id="gluc-val-4" class="bar-value">0</span></div>
+                    </div>
+    
+                </div>
+    
+                <div class="glass-card">
+                    <h2>BMI Category Distribution</h2>
+                    <p class="stat-caption">Classification based on BMI ranges.</p>
+    
+                    <div class="css-bar-container">
+                        <div class="css-bar-row"><span class="bar-label">Normal</span><div class="bar-track"><div id="bmi-1" class="bar-fill bmi-fill"></div></div><span id="bmi-val-1" class="bar-value">0%</span></div>
+                        <div class="css-bar-row"><span class="bar-label">Overweight</span><div class="bar-track"><div id="bmi-2" class="bar-fill bmi-fill"></div></div><span id="bmi-val-2" class="bar-value">0%</span></div>
+                        <div class="css-bar-row"><span class="bar-label">Obese</span><div class="bar-track"><div id="bmi-3" class="bar-fill bmi-fill"></div></div><span id="bmi-val-3" class="bar-value">0%</span></div>
+                    </div>
+    
+                </div>
+    
+                <!-- ROW 4: Glucose vs Prediction & Past 5 Predictions -->
+                <div class="glass-card">
+                    <h2>Glucose vs Prediction</h2>
+                    <p class="stat-caption">Scatter plot analysis of correlation.</p>
+    
+                    <div class="chart-wrapper">
+                        <canvas id="scatterChart"></canvas>
+                    </div>
+    
+                </div>
+    
+                <div class="glass-card">
+                    <h2>Past 5 Predictions</h2>
+                    <p class="stat-caption">Log of recent model inferences.</p>
+    
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Age</th>
+                                <th>BMI</th>
+                                <th>Glucose</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+    
+                </div>
+    
+            </div>
+        </div>
+    
+        <!-- Application Logic -->
+        <script src="../static/js/dashboard.js"></script>
+    </body>
+</html>
