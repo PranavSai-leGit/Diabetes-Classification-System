@@ -10,7 +10,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import (
     declarative_base,
-    relationship
+    relationship,
+    backref
 )
 from datetime import datetime
 from database import Base
@@ -41,6 +42,10 @@ class User(Base):
     role = Column(
         String(20),
         default='user'
+    )
+    last_login = Column(
+        DateTime,
+        nullable=True
     )
     created_at = Column(
         DateTime,
@@ -121,4 +126,4 @@ class ActivityLog(Base):
                        server_default=func.now(), index=True)
 
     # Relationships (Optional, but helpful for ORM queries)
-    user = relationship("User", backref="activity_logs")
+    user = relationship("User", backref=backref("activity_logs", cascade="all, delete-orphan"))

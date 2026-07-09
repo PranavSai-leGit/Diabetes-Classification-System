@@ -27,9 +27,9 @@ body {
     border: 1px solid rgba(195, 190, 216, 0.2);
     color: #e2e8f0;
     width: 75%;
-    padding: 30px;
+    padding: 20px;
     border-radius: 24px;
-    margin-left: 20%;
+    margin-left: 24%;
     margin-right: 5%;
     max-width: 1200px;
     user-select: none;
@@ -41,6 +41,7 @@ body {
     color: #d1c7c7;
     margin-bottom: 25px;
     font-size: 2rem;
+    margin-left: 2%;
 }
 
 /* Grid Layout */
@@ -58,7 +59,7 @@ body {
 
 /* Glass Card Reusable Style */
 .glass-card {
-    background: rgba(25, 64, 114, 0.432);
+    background: rgba(2, 12, 151, 0.233);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -90,6 +91,7 @@ body {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
 .profile-info-block {
@@ -173,7 +175,7 @@ body {
 .action-card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 25px;
 }
 
 .action-btn {
@@ -202,3 +204,110 @@ body {
     background: rgba(239, 68, 68, 0.4);
     color: #fee2e2;
 }
+#toggle {
+    width: 15%;
+    right: 1px;
+    padding: 12px;
+    size :50%;
+    border-radius: 100px;
+    box-shadow: none;
+    background-color: transparent;
+
+    transition: 0.2s;
+}
+.icon-button {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: none;
+    opacity: 0.5;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    opacity: 0.5;
+}
+
+.icon-right {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #666;
+    cursor: pointer;
+}
+
+/* Account Settings Form Inputs Styling */
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+
+}
+
+.settings-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.settings-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.settings-input:focus {
+    border-color: #60a5fa;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
+}
+
+.settings-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Profile Role Badges */
+.role-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.user-role {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.admin-role {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+

@@ -10,21 +10,22 @@
 
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-image: url("../images/Background.jpg");    
+    background-image: url("../../images/Background.jpg");
     background-size: cover;
     background-position: left;
     height: 100vh;
     display: flex;
-    align-items: center; /* Center the form vertically on screen */
+    align-items: center;
+    /* Center the form vertically on screen */
 }
 
 
 .home-container {
     position: fixed;
-    
+
     max-height: 95vh;
     overflow-y: auto;
-    
+
     background: rgba(195, 190, 216, 0.15);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
@@ -34,7 +35,7 @@ body {
     width: 80%;
     padding: 30px;
     border-radius: 24px;
-    
+
     margin-left: 24%;
     margin-right: 10%;
     min-width: 100px;
@@ -47,18 +48,22 @@ body {
 }
 
 .home-container::-webkit-scrollbar-track {
-    background: transparent; /* Makes the track invisible */
+    background: transparent;
+    /* Makes the track invisible */
     border-radius: 10px;
-    margin-block: 15px; /* Adds some padding at the top and bottom of the scrollbar track */
+    margin-block: 15px;
+    /* Adds some padding at the top and bottom of the scrollbar track */
 }
 
 .home-container::-webkit-scrollbar-thumb {
-    background: rgba(195, 190, 216, 0.3); /* Matches your glass card border/background */
+    background: rgba(195, 190, 216, 0.3);
+    /* Matches your glass card border/background */
     border-radius: 10px;
 }
 
 .home-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(195, 190, 216, 0.6); /* Highlights when hovered */
+    background: rgba(195, 190, 216, 0.6);
+    /* Highlights when hovered */
 }
 
 .home-container h1 {
@@ -89,11 +94,14 @@ body {
     border-radius: 24px;
     padding: 25px;
     color: #e2e8f0;
-    flex: 1; /* Makes both cards share the row 50/50 */
-    min-width: 300px; /* Prevents them from getting too squished */
+    flex: 1;
+    /* Makes both cards share the row 50/50 */
+    min-width: 300px;
+    /* Prevents them from getting too squished */
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.glass-card:hover{
+
+.glass-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
@@ -232,15 +240,4 @@ body {
     color: #ffffff;
     font-size: 14px;
     font-weight: 500;
-}
-
-/* Action Card Hover Animations */
-.action-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
-}
-
-.action-card:hover {
-    transform: translateY(-5px) scale(1.03) !important;
-    border-color: rgba(96, 165, 250, 0.4) !important;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3) !important;
 }

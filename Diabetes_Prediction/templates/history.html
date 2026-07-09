@@ -13,15 +13,7 @@
 
     <body>
         <!--Check for token-->
-        <script>
-            const token = localStorage.getItem("token");
-
-            if(!token) {
-                window.location.replace("http://127.0.0.1:8000/login");
-                alert("Please Log In");
-            }
-
-        </script>
+        <script src="{{ url_for('static', path='js/user-guard.js') }}"></script>
 
         {% include "components/sidebar.html" %}
         <div class="history-container">

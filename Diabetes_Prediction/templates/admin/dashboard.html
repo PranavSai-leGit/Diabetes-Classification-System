@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+        <link rel="stylesheet" href="{{ url_for('static', path='css/admin/dashboard.css') }}">
+        <link rel="stylesheet" href="../../static/css/admin/predictions.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <title>Admin Dashboard</title>
+    </head>
+
+    <body>
+        <!--Check for token-->
+        <script src="{{ url_for('static', path='js/admin/auth-guard.js') }}"></script>
+
+        {% include "admin/sidebar.html" %}
+
+        <div class="dashboard-container">
+            <h1 class="dashboard-title">Admin Dashboard</h1>
+
+            <!-- ================= RECENT ACTIVITY: Full Width Card ================= -->
+            <div class="full-width-row" style="margin-bottom: 25px;">
+                <div class="glass-card" style="padding: 25px;">
+                    <h2>Recent System Activity</h2>
+                    <p class="stat-caption" style="margin-bottom: 15px;">Live feed of administrative actions and security logs.</p>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Admin/User</th>
+                                <th>Action</th>
+                                <th>Entity</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-activity-body">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #94a3b8;">Loading activity feed...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ================= TOP ROW: 6 Metrics Cards ================= -->
+            <div class="admin-metrics-grid">
+                <div class="metric-box">
+                    <div id="total-users" class="metric-value">--</div>
+                    <div class="metric-label">Total Users</div>
+                </div>
+                <div class="metric-box">
+                    <div id="total-predictions" class="metric-value">--</div>
+                    <div class="metric-label">Total Predictions</div>
+                </div>
+                <div class="metric-box">
+                    <div id="active-today" class="metric-value" style="color: #60a5fa;">--</div>
+                    <div class="metric-label">Active Today</div>
+                </div>
+                <div class="metric-box">
+                    <div id="new-users-week" class="metric-value" style="color: #a78bfa;">--</div>
+                    <div class="metric-label">New This Week</div>
+                </div>
+                <div class="metric-box">
+                    <div id="avg-confidence" class="metric-value" style="color: #fb7185;">--</div>
+                    <div class="metric-label">Avg Confidence</div>
+                </div>
+                <div class="metric-box">
+                    <div id="model-version" class="metric-value" style="color: #34d399;">--</div>
+                    <div class="metric-label">Model Version</div>
+                </div>
+            </div>
+
+            <!-- ================= MIDDLE ROW: 2 Charts ================= -->
+            <div class="dashboard-grid" style="margin-bottom: 25px;">
+                <div class="glass-card">
+                    <h2>User Signup Trend</h2>
+                    <p class="stat-caption">Account registrations over the last 7 days.</p>
+                    <div class="chart-wrapper" style="height: 220px;">
+                        <canvas id="signupChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Prediction outcomes</h2>
+                    <p class="stat-caption">Diabetic vs Non-Diabetic ratio.</p>
+                    <div class="chart-wrapper" style="height: 220px; display: flex; justify-content: center; align-items: center;">
+                        <canvas id="outcomeChart" style="max-height: 100%; max-width: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= BOTTOM ROW: 2 Tables ================= -->
+            <div class="dashboard-grid">
+                <div class="glass-card">
+                    <h2>Recent Predictions</h2>
+                    <p class="stat-caption">Last 5 system classification inferences.</p>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Result</th>
+                                <th>Confidence</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-predictions-body">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #94a3b8;">Loading predictions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Recent Registered Users</h2>
+                    <p class="stat-caption">Details of the last 5 accounts created.</p>
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-users-body">
+                            <tr>
+                                <td colspan="3" style="text-align: center; color: #94a3b8;">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="glass-card" style="margin-top: 4%; margin-bottom: -2%;">
+                <h1 class="predictions-title" style="text-align: center;">Predictions</h1>
+                <div class="predictions-toolbar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 15px; width: 100%;">
+                    <div class="search-wrapper" style="display: flex; align-items: center; gap: 10px;">
+                        <label for="search-username"><strong></strong></label>
+                        <input 
+                        type="text" 
+                        id="search-username" 
+                        placeholder="Search by Username..." 
+                        oninput="handleSearch()" 
+                        style="padding: 10px 15px; border-radius: 20px; border: 1px solid rgba(95, 111, 207, 0.575); background: rgba(18, 32, 109, 0.425); color: #ffffff; outline: none; font-size: 0.95rem; width: 200px;height: 30px ;">
+                    </div>
+                    <div class="select-wrapper" style="margin-left: auto;">
+                        <label for="status-filter"><strong>Filter: </strong></label>
+                        <select id="status-filter" onchange="applyFilter()">
+                            <option value="All">All</option>
+                            <option value="Diabetic">Diabetic</option>  
+                            <option value="Non-Diabetic">Non-Diabetic</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="table-wrapper">
+                    <table class="predictions-table">
+                        <thead>
+                            <tr>
+                                <th>S.no</th>
+                                <th>Username</th>
+                                <th>Prediction</th>
+                                <th>Confidence</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+    
+                        <tbody id="predictions-table-body"></tbody>
+                    </table>
+                    <div id="pagination-controls">
+                        <button id="prev-btn" onclick="changePage(-1)">Previous</button>
+                        <span id="page-info">Page 1</span>
+                        <button id="next-btn" onclick="changePage(1)">Next</button>
+                    </div>
+                </div>
+                <p id="loading-message">Loading your history...</p>
+                <p id="error-message" style="color: #9c1414; display: none;"></p>
+            </div>
+            <script src="../../static/js/admin/predictions.js"></script>
+    
+            </div>
+        </div>
+
+
+        <!-- Application Logic -->
+        <script src="{{ url_for('static', path='js/admin/dashboard.js') }}"></script>
+    </body>
+</html>

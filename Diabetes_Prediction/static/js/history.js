@@ -80,7 +80,11 @@ async function fetchHistory(page) {
 
         result.data.forEach((record, index) => {
             const row = document.createElement("tr");
-            const dateObj = new Date(record.created_at);
+            let rawDate = record.created_at;
+            if (rawDate && !rawDate.endsWith("Z") && !rawDate.includes("+")) {
+                rawDate += "Z";
+            }
+            const dateObj = new Date(rawDate);
             const formattedDate = dateObj.toLocaleString();
 
             row.innerHTML = `

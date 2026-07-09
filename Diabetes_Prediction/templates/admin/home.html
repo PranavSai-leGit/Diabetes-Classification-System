@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+    <link rel="stylesheet" href="../static/css/home.css">
+
+    <title>Home</title>
+</head>
+
+<body>
+    <!--Check for token-->
+    <script src="{{ url_for('static', path='js/admin/auth-guard.js') }}"></script>
+
+    {% include "admin/sidebar.html" %}
+
+    <div class="home-container">
+
+        <h1 class="home-title">Home</h1>
+        <div class="home-bottom-row">
+
+            <div class="glass-card project-info">
+                <p style="margin-top: 4%;">
+                    This Diabetes Prediction Model utilizes machine learning to assess the risk of developing diabetes
+                    based on key health indicators.
+                </p>
+                <p style="margin-top: 10%;">
+                    By analyzing vital signs such as BMI, HbA1c levels, and blood glucose, this tool aims to provide
+                    early risk detection, empowering individuals and clinicians to take preventative action before
+                    symptoms escalate.
+                </p>
+            </div>
+
+            <div class="glass-card global-analytics">
+
+                <h2>Global Diabetes Analytics</h2>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>Global Adult Prevalence</span>
+                        <span>11.1%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 11.1%; background: #ef4444;"></div>
+                    </div>
+                    <p class="stat-caption">~589 million adults are living with diabetes worldwide.</p>
+                </div>
+
+                <div class="stat-group">
+
+                    <div class="stat-labels">
+                        <span>Undiagnosed Cases</span>
+                        <span>44.7%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 44.7%; background: #eab308;"></div>
+                    </div>
+                    <p class="stat-caption">Almost half of all adults with diabetes remain undiagnosed.</p>
+
+                </div>
+
+                <div class="stat-group">
+
+                    <div class="stat-labels">
+                        <span>Preventable Type 2 Cases</span>
+                        <span>80.0%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 80%; background: #22c55e;"></div>
+                    </div>
+                    <p class="stat-caption">Through diet, exercise, and early monitoring.</p>
+
+                </div>
+            </div>
+
+            <div class="glass-card global-analytics">
+
+                <h2>Top Feature Importance</h2>
+                <p class="stat-caption" style="margin-bottom: 15px;">The weight of each health indicator used by the
+                    algorithm to make a prediction.</p>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>Blood Glucose Level</span>
+                        <span>41.9%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 41.9%; background: #ef4444;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>HbA1c Level</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 40%; background: #f97316;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>Age</span>
+                        <span>25.8%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 25.8%; background: #eab308;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>BMI</span>
+                        <span>21.4%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 21.4%; background: #3b82f6;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

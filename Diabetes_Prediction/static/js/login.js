@@ -50,8 +50,15 @@ document.getElementById("login-form").addEventListener("submit", async (e)=>{
         data.access_token
     );
 
-    if(response.ok){
-        window.location.replace("/home");    
+    const payload = JSON.parse(atob(data.access_token.split(".")[1]));
+
+    if (response.ok) {
+        if (payload.role == "admin") {
+            window.location.replace("/admin/home");
+        }
+        else {
+            window.location.replace("/home");
+        }
     }
 });
 

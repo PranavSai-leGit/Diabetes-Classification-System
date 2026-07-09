@@ -50,6 +50,23 @@ document.getElementById("register-form").addEventListener("submit", async (e)=>{
         return;
     }
 
+    if (password.length < 8) {
+        errorElement.textContent = "Password must be at least 8 characters long.";
+        return;
+    }
+    if (!/\d/.test(password)) {
+        errorElement.textContent = "Password must contain at least one number.";
+        return;
+    }
+    if (!/[a-z]/.test(password)) {
+        errorElement.textContent = "Password must contain at least one lowercase letter.";
+        return;
+    }
+    if (!/[A-Z]/.test(password)) {
+        errorElement.textContent = "Password must contain at least one uppercase letter.";
+        return;
+    }
+
     const allowedDomains = ["gmail.com", "hotmail.com", "yahoo.com", "outlook.com", "icloud.com"];
     
     const emailParts = email.split('@');

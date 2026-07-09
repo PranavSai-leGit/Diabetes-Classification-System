@@ -63,6 +63,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("total_positives").textContent = data.stats?.total_positives || 0;
             document.getElementById("total_negatives").textContent = data.stats?.total_negatives || 0;
 
+            const positive_percent = data.stats.total_predictions ? ((data.stats.total_positives / data.stats.total_predictions) * 100).toFixed(1) : 0;    
+            const negative_percent = data.stats.total_predictions ? ((data.stats.total_negatives / data.stats.total_predictions) * 100).toFixed(1) : 0;
+
             // 1.5 Initialize the Main Prediction Chart (Doughnut)
             const predictionCanvas = document.getElementById('predictionChart');
             if (predictionCanvas) {
@@ -75,23 +78,33 @@ document.addEventListener("DOMContentLoaded", async () => {
                 new Chart(predictionCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Positives', 'Negatives'],
+                        labels: ['Positive', 'Negative'],
                         datasets: [{
-                            data: [data.stats?.total_positives || 0, data.stats?.total_negatives || 0],
+                            data: [positive_percent, negative_percent],
                             backgroundColor: ['rgba(11, 189, 11, 0.8)', 'rgba(241, 29, 29, 0.8)'],
-                            borderColor: ['#06421c', '#4e0505'],
+                            borderColor: ['rgb(12, 121, 12)', 'rgb(145, 17, 17)'],
                             borderWidth: 1,
-                            borderRadius: 50, // Adds 15px rounded corners to all corners of the arcs
-                            cutout: '80%' // Makes room for your center text
+                            borderRadius: 50,
+                            cutout: '80%'
                         }]
                     },
                     options: {
-                        circumference: 180, // NEW: Makes it a half-circle
-                        rotation: 270,      // NEW: Rotates it so the flat edge is at the bottom
-                        cutout: '80%',      // Keeps the thin LeetCode ring style                        responsive: true,
+                        circumference: 180, 
+                        rotation: 270,
+                        cutout: '80%',             
                         maintainAspectRatio: false,
+                        responsive: true,
                         plugins: {
-                            legend: { display: false } 
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return ` ${context.raw}%`;
+                                    }
+                                }
+                            }
                         }
                     }
                 });
@@ -103,7 +116,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.getElementById("confidence").textContent = `${data.latest_prediction.confidence || 0}%`;
                 
                 if (data.latest_prediction.created_at) {
-                    const dateObj = new Date(data.latest_prediction.created_at);
+                    let rawDate = data.latest_prediction.created_at;
+                    if (rawDate && !rawDate.endsWith("Z") && !rawDate.includes("+")) {
+                        rawDate += "Z";
+                    }
+                    const dateObj = new Date(rawDate);
                     document.getElementById("time-stamp").textContent = dateObj.toLocaleString();
                 } else {
                     document.getElementById("time-stamp").textContent = "N/A";
@@ -172,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         labels: ['Male', 'Female'],
                         datasets: [{
                             data: data.gender_distribution,
-                            backgroundColor: ['rgba(59, 130, 246, 0.8)', 'rgba(236, 72, 153, 0.8)'],
+                            backgroundColor: ['rgba(17, 63, 138, 0.8)', 'rgba(184, 19, 101, 0.8)'],
                             borderColor: ['#3b82f6', '#ec4899'],
                             borderWidth: 1,
                             cutout: '75%'

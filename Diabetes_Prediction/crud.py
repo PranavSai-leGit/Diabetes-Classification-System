@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
-from models import User, Prediction
+from models import User, Prediction, ActivityLog
 from security import hash_password
 from schemas import filter_input
 import math
 from sqlalchemy import func
+from datetime import datetime, timedelta
+
 
 def create_user(db, user):
 
@@ -124,7 +126,7 @@ def data_for_dashboard(db: Session, user_id: int):
     risk_counts = {"low": 0, "medium": 0, "high": 0}
     age_bins = {"0-20": 0, "21-40": 0, "41-60": 0, "61-80": 0}
     gender_counts = {"Male": 0, "Female": 0}
-    bmi_bins = {"Normal": 0, "Overweight": 0, "Obese": 0}
+    bmi_bins = {"Underweight":0, "Normal": 0, "Overweight": 0, "Obese": 0}
 
     # Glucose by age group (Sum and Count for average)
     gluc_age_data = {
@@ -167,7 +169,9 @@ def data_for_dashboard(db: Session, user_id: int):
 
         # BMI Distribution
         if p.bmi is not None:
-            if p.bmi < 25:
+            if p.bmi < 18.5:
+                bmi_bins["Underweight"] += 1
+            elif p.bmi < 25:
                 bmi_bins["Normal"] += 1
             elif p.bmi < 30:
                 bmi_bins["Overweight"] += 1
@@ -231,6 +235,7 @@ def data_for_dashboard(db: Session, user_id: int):
             gender_counts["Female"]
         ],
         "bmi_distribution": [
+            to_pct(bmi_bins["Underweight"]),
             to_pct(bmi_bins["Normal"]),
             to_pct(bmi_bins["Overweight"]),
             to_pct(bmi_bins["Obese"])
@@ -255,4 +260,110 @@ def data_for_dashboard(db: Session, user_id: int):
                 "result": "Positive" if p.prediction in ["Diabetic", "Positive", "1"] else "Negative"
             } for p in predictions[:5]
         ]
+    }
+
+def data_for_admin_dashboard(db: Session, current_admin):
+
+    one_week_ago = datetime.utcnow() - timedelta(days=7)
+
+    # Metrics
+    total_users = db.query(User).count()
+    total_predictions = db.query(Prediction).count()
+    active_users_today = db.query(User).filter(
+        User.last_login >= func.current_date()
+    ).count()
+    new_users_this_week = db.query(User).filter(
+        User.created_at >= one_week_ago).count()
+
+    avg_conf = db.query(func.avg(Prediction.confidence)).scalar() or 0
+    average_confidence = round(avg_conf * 100, 1)
+    model_version = "1.0.0"
+
+    # Recent Predictions (with Username)
+    recent_predictions_query = (
+        db.query(Prediction)
+        .order_by(Prediction.created_at.desc())
+        .limit(5)
+        .all()
+    )
+    recent_predictions = [{
+        "username": p.user.username if p.user else "Unknown",
+        "prediction": p.prediction,
+        "confidence": round((p.confidence or 0) * 100, 1),
+        "created_at": p.created_at.isoformat() if p.created_at else ""
+    } for p in recent_predictions_query]
+
+    # Recent Users
+    recent_users_query = (
+        db.query(User)
+        .order_by(User.created_at.desc())
+        .limit(5)
+        .all()
+    )
+    recent_users = [{
+        "username": u.username,
+        "email": u.email,
+        "created_at": u.created_at.isoformat() if u.created_at else ""
+    } for u in recent_users_query]
+
+    # Signups trend (last 7 days)
+    signups_by_date = (
+        db.query(
+            func.date(User.created_at).label("date"),
+            func.count(User.id).label("count")
+        )
+        .filter(User.created_at >= func.current_date() - 7)
+        .group_by(func.date(User.created_at))
+        .order_by(func.date(User.created_at))
+        .all()
+    )
+    signups_trend = [{"date": str(row.date), "count": row.count}
+                     for row in signups_by_date]
+
+    # Prediction outcomes distribution
+    diabetic_count = db.query(Prediction).filter(
+        Prediction.prediction == "Diabetic").count()
+    nondiabetic_count = db.query(Prediction).filter(
+        Prediction.prediction == "Non-Diabetic").count()
+
+    # Recent System Activities
+    recent_activity_query = (
+        db.query(ActivityLog)
+        .order_by(ActivityLog.timestamp.desc())
+        .limit(5)
+        .all()
+    )
+    recent_activity = []
+    for log in recent_activity_query:
+        user = db.query(User).filter(User.id == log.user_id).first()
+        username = user.username if user else "System"
+        recent_activity.append({
+            "id": log.id,
+            "username": username,
+            "action": log.action,
+            "entity_type": log.entity_type,
+            "timestamp": log.timestamp.isoformat() if log.timestamp else ""
+        })
+
+    return {
+        "metrics": {
+            "total_users": total_users,
+            "total_predictions": total_predictions,
+            "active_users_today": active_users_today,
+            "new_users_this_week": new_users_this_week,
+            "average_confidence": average_confidence,
+            "model_version": model_version
+        },
+        "recent_predictions": recent_predictions,
+        "recent_users": recent_users,
+        "signups_trend": signups_trend,
+        "outcomes_distribution": {
+            "diabetic": diabetic_count,
+            "nondiabetic": nondiabetic_count
+        },
+        "recent_activity": recent_activity,
+        "admin_info": {
+            "email": current_admin.email,
+            "role": current_admin.role
+        }
     }

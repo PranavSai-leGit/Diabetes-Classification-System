@@ -14,15 +14,7 @@
 
     <body>
         <!--Check for token-->
-        <script>
-            const token = localStorage.getItem("token");
-
-            if(!token) {
-                window.location.replace("http://127.0.0.1:8000/login");
-                alert("Please Log In");
-            }
-
-        </script>
+        <script src="{{ url_for('static', path='js/user-guard.js') }}"></script>
 
         {% include "components/sidebar.html" %}
 
@@ -129,7 +121,7 @@
                     <p class="stat-caption">Demographic breakdown by age.</p>
     
                     <div class="css-bar-container">
-                        <div class="css-bar-row">
+                        <div class="css-bar-row" style="margin-top: 10%;">
                             <span class="bar-label">0-20</span>
                             <div class="bar-track">
                                 <div id="age-1" class="bar-fill age-fill"></div>
@@ -179,6 +171,7 @@
                     <p class="stat-caption">Classification based on BMI ranges.</p>
     
                     <div class="css-bar-container">
+                        <div class="css-bar-row"><span class="bar-label">Underweight</span><div class="bar-track"><div id="bmi" class="bar-fill bmi-fill"></div></div><span id="bmi-val" class="bar-value">0%</span></div>
                         <div class="css-bar-row"><span class="bar-label">Normal</span><div class="bar-track"><div id="bmi-1" class="bar-fill bmi-fill"></div></div><span id="bmi-val-1" class="bar-value">0%</span></div>
                         <div class="css-bar-row"><span class="bar-label">Overweight</span><div class="bar-track"><div id="bmi-2" class="bar-fill bmi-fill"></div></div><span id="bmi-val-2" class="bar-value">0%</span></div>
                         <div class="css-bar-row"><span class="bar-label">Obese</span><div class="bar-track"><div id="bmi-3" class="bar-fill bmi-fill"></div></div><span id="bmi-val-3" class="bar-value">0%</span></div>
@@ -191,7 +184,7 @@
                     <h2>Glucose vs Prediction</h2>
                     <p class="stat-caption">Scatter plot analysis of correlation.</p>
     
-                    <div class="chart-wrapper">
+                    <div class="chart-wrapper" style="margin-top: 10%;">
                         <canvas id="scatterChart"></canvas>
                     </div>
     

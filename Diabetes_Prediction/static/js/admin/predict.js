@@ -5,16 +5,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         localStorage.removeItem("token");
         alert("Session expired. Please Login again");
         window.location.replace("/login");
-}
+    }
 });
-function isTokenExpired(token) {
 
+function isTokenExpired(token) {
+    try {
         const payload = JSON.parse(atob(token.split(".")[1]));
         return payload.exp * 1000 < Date.now();
+    } catch(e) {
+        return true;
     }
+}
 
 document.getElementById("predict-form").addEventListener("submit", async (e) => {
-    
     e.preventDefault();
 
     const errorElement = document.getElementById("error-message");
@@ -31,8 +34,9 @@ document.getElementById("predict-form").addEventListener("submit", async (e) => 
 
     const token = localStorage.getItem("token");
 
-    if(!token){
-        window.location.replace("http://127.0.0.1:8000/login");
+    if(!token || isTokenExpired(token)){
+        localStorage.removeItem("token");
+        window.location.replace("/login");
         alert("Not Authenticated")
         return;
     }
@@ -58,15 +62,11 @@ document.getElementById("predict-form").addEventListener("submit", async (e) => 
     const data = await response.json();
 
     if (!response.ok) {
-
         if (Array.isArray(data.detail)) {
             errorElement.textContent = data.detail[0].msg;
-        } 
-
-        else {
+        } else {
             errorElement.textContent = data.detail;
         }
-
         return;
     }
     const predictionBox = document.getElementById("prediction");
@@ -167,10 +167,9 @@ document.getElementById("predict-form").addEventListener("submit", async (e) => 
             container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
         }, 100);
     }
-})
+});
 
 document.querySelectorAll('input[type="number"]').forEach(input => {
-
     input.addEventListener("keydown", e => {
         if (e.key === "-") {
             e.preventDefault();
@@ -182,11 +181,10 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
             input.value = "";
         }
     });
-
 });
 
 document.getElementById("predict-form").addEventListener("reset", function() {
     const predictionBox = document.getElementById("prediction");
     predictionBox.innerHTML = "";
     predictionBox.style.display = "none";
-})
+});

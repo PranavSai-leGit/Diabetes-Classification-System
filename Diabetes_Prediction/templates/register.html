@@ -36,6 +36,8 @@
                 <input 
                 id="username"
                 type="text"
+                minlength="3"
+                maxlength="16"
                 placeholder="Username"
                 required>
 
@@ -63,6 +65,7 @@
                 type="password"
                 minlength="8"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
                 placeholder="Password"
                 required>
 
@@ -101,7 +104,8 @@
                         Password must:<br>
                         • Be at least 8 characters<br>
                         • Contain a number<br>
-                        • Contain a special character
+                        • Contain a lowercase letter<br>
+                        • Contain an uppercase letter
                     </div>
             </div>
 

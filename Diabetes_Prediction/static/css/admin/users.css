@@ -6,7 +6,7 @@
 
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-image: url("../images/Background.jpg");    
+    background-image: url("../../images/Background.jpg");    
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,31 +16,29 @@ body {
     justify-content: center;
 }
 
-.history-container {
+.users-container {
     background: rgba(195, 190, 216, 0.15);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(195, 190, 216, 0.2);
     color: #e2e8f0;
-    width: 60%;
+    width: 70%;
+    height: 95%;
     max-height: 88vh;
     padding: 30px;
     border-radius: 24px;
-    margin-left: 30%;
-    margin-right: auto;
+    margin-left: 20%;
+    margin-right: 2%;
     display: flex;
     flex-direction: column;
+    user-select: none;
 }
 .select-wrapper {
     position: relative;
-    width: 30%;
-    margin-bottom: -3%;
-    margin-left: 68%;
-    transform: translateY(-150%);
     display: flex;
     justify-content: flex-end;
-    align-items: center
+    align-items: center;
 }
 
 select {
@@ -83,7 +81,7 @@ select:focus {
 
 }
 
-.history-title {
+.users-title {
     text-align: center;
     color: #d1c7c7;
     margin-bottom: 25px;
@@ -91,19 +89,20 @@ select:focus {
 }
 
 /* Table Styling */
-.history-table {
+.users-table {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+    text-align: center;
 }
 
-.history-table th, 
-.history-table td {
+.users-table th, 
+.users-table td {
     padding: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
-.history-table th {
+.users-table th {
     background: rgba(255, 255, 255, 0.05);
     color: #cbd5e1;
     font-weight: 600;
@@ -111,11 +110,22 @@ select:focus {
     top: 0;
     backdrop-filter: blur(5px);
     background-color: #c3cbd62d;
+    text-align: center;
 }
 
-.history-table tr:hover td {
+.users-table tr:hover td {
     background: rgba(255, 255, 255, 0.05);
     transition: background 0.2s ease;
+}
+.users-toolbar {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    width: 100%;
+    transform: translateY(-100%);
+    margin-bottom: -3%;
 }
 
 .status-badge {
@@ -188,7 +198,7 @@ select:focus {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
-.history-table {
+.users-table {
     border-collapse: separate;
     border-spacing: 0;
   }

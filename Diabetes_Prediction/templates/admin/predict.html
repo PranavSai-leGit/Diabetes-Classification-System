@@ -5,28 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
-        <link rel="stylesheet" href="../static/css/predict.css">
+        <link rel="stylesheet" href="../../static/css/predict.css">
 
-
-        <title>Prediction Page</title>
+        <title>Admin - Prediction Page</title>
     </head>
 
     <body>
         <!--Check for token-->
-        <script src="{{ url_for('static', path='js/user-guard.js') }}"></script>
+        <script src="{{ url_for('static', path='js/admin/auth-guard.js') }}"></script>
 
-        {% include "components/sidebar.html" %}
+        {% include "admin/sidebar.html" %}
 
-        <div class="predict-container">
-            <h1 class="predict-title">Prediction</h1>
+        <div class="predict-container" style="margin-left: auto; margin-right: 14%; width: 55%;">
+            <h1 class="predict-title">Predict</h1>
             <form id="predict-form">
 
                 <div class="input-group">
-
                     <label for="gender" class="field-label">Gender</label>
                     <div class="select-wrapper">
-                        <select id="gender" name="gender">
-                            <option value="" disabled selected hidden style="color: rgb(29, 76, 117);">Select gender</option>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected hidden>Select gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
@@ -34,7 +32,6 @@
                 </div>
 
                 <div class="input-group">
-
                     <label for="age" class="field-label">Age</label>
                     <div class="input-box">
                         <input 
@@ -50,7 +47,6 @@
                 </div>
 
                 <div class="input-group">
-
                     <label class="field-label">Hypertension</label>
                     <div class="radio-group">
                         <label class="radio-label">
@@ -72,7 +68,6 @@
                 </div>
 
                 <div class="input-group">
-
                     <label class="field-label">Heart Disease</label>
                     <div class="radio-group">
                         <label class="radio-label">
@@ -94,11 +89,10 @@
                 </div>
 
                 <div class="input-group">
-
                     <label for="smoking_history" class="field-label">Smoking History</label>
                     <div class="select-wrapper">
-                        <select id="smoking_history" name="smoking_history">
-                            <option value="" disabled selected hidden>Select smoking history</option>
+                        <select id="smoking_history" name="smoking_history" required>
+                            <option value="" disabled selected hidden>Select history</option>
                             <option value="current">Current</option>
                             <option value="former">Former</option>
                             <option value="never">Never</option>
@@ -109,7 +103,6 @@
                 </div>
 
                 <div class="input-group">
-
                     <label for="bmi" class="field-label">BMI</label>
                     <div class="input-box">
                         <input 
@@ -125,7 +118,6 @@
                 </div>
 
                 <div class="input-group">
-
                     <label for="HbA1c_level" class="field-label">HbA1c Level</label>
                     <div class="input-box">
                         <input 
@@ -140,7 +132,6 @@
                 </div>
 
                 <div class="input-group">
-
                     <label for="blood_glucose_level" class="field-label">Blood Glucose Level</label>
                     <div class="input-box">
                         <input 
@@ -164,9 +155,8 @@
                     <div id="prediction" class="prediction-result" style="display: none;"></div>
                 </div>
 
-    </form>
-</div>
-        <script src="../static/js/predict.js"></script>
+            </form>
+        </div>
+        <script src="../../static/js/admin/predict.js"></script>
     </body>
-
 </html>

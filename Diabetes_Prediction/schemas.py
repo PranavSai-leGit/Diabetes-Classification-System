@@ -1,9 +1,12 @@
-from typing import Literal
+from typing import Literal, Optional
+from datetime import datetime
+import re
 from pydantic import (
     BaseModel,
     Field,
     EmailStr,
-    ConfigDict
+    ConfigDict,
+    field_validator
 )
 
 class UserCreate(BaseModel):
@@ -15,9 +18,20 @@ class UserCreate(BaseModel):
 
     email:EmailStr
 
-    password:str = Field(
-        min_length=8
-    )
+    password:str
+
+    @field_validator('password')
+    @classmethod
+    def validate_password_strength(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError('Password must be at least 8 characters long.')
+        if not re.search(r'\d', v):
+            raise ValueError('Password must contain at least one number.')
+        if not re.search(r'[a-z]', v):
+            raise ValueError('Password must contain at least one lowercase letter.')
+        if not re.search(r'[A-Z]', v):
+            raise ValueError('Password must contain at least one uppercase letter.')
+        return v
 
 class UserLogin(BaseModel):
 
@@ -34,6 +48,10 @@ class UserResponse(BaseModel):
     username:str
 
     email:EmailStr
+
+    role:str
+
+    last_login:Optional[datetime] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -80,3 +98,34 @@ class PredictionResponse(BaseModel):
         ge=0,
         le=1
     )
+
+class filter_input(BaseModel):
+
+    status: Literal['Diabetic', 'Non-Diabetic', 'None']
+
+class RoleUpdateRequest(BaseModel):
+
+    role: Literal['user', 'admin']
+
+class UserUpdate(BaseModel):
+
+    username: Optional[str] = Field(None, min_length=3, max_length=100)
+
+    email: Optional[EmailStr] = None
+
+    password: Optional[str] = None
+
+    @field_validator('password')
+    @classmethod
+    def validate_password_strength(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        if len(v) < 8:
+            raise ValueError('Password must be at least 8 characters long.')
+        if not re.search(r'\d', v):
+            raise ValueError('Password must contain at least one number.')
+        if not re.search(r'[a-z]', v):
+            raise ValueError('Password must contain at least one lowercase letter.')
+        if not re.search(r'[A-Z]', v):
+            raise ValueError('Password must contain at least one uppercase letter.')
+        return v

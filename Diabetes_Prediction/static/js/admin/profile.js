@@ -1,18 +1,18 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
+document.addEventListener("DOMContentLoaded", async () => {
     if (!token || isTokenExpired(token)) {
         localStorage.removeItem("token");
         alert("Session expired.");
         window.location.replace("/login");
     }
 });
+
 function isTokenExpired(token) {
     try {
         const payload = JSON.parse(atob(token.split(".")[1]));
         return payload.exp * 1000 < Date.now();
-    }
-    catch (e) {
+    } catch (e) {
         return true;
     }
 }
@@ -68,67 +68,70 @@ async function fetchUserProfile() {
 
     const info = document.getElementById("profile-info");
 
-    const [response, predictions_positive, predictions_negative] = await Promise.all([
-        fetch("/profile", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${activeToken}`
-            }
-        }),
+    try {
+        const [response, predictions_positive, predictions_negative] = await Promise.all([
+            fetch("/profile", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${activeToken}`
+                }
+            }),
 
-        fetch("/history?page=1&limit=1&status=Diabetic", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${activeToken}`
-            }
-        }),
+            fetch("/history?page=1&limit=1&status=Diabetic", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${activeToken}`
+                }
+            }),
 
-        fetch("/history?page=1&limit=1&status=Non-Diabetic", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${activeToken}`
-            }
-        })
-    ]);
+            fetch("/history?page=1&limit=1&status=Non-Diabetic", {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${activeToken}`
+                }
+            })
+        ]);
 
-    if(!response.ok){
-        if (response.status === 401) {
-            localStorage.removeItem("token");
-            redirectToLogin();
-            return;
+        if (!response.ok) {
+            if (response.status === 401) {
+                localStorage.removeItem("token");
+                redirectToLogin();
+                return;
+            }
+            throw new Error("Failed to fetch profile data");
+        }   
+
+        const data = await response.json();
+
+        // Inject data
+        info.innerHTML = `
+            <div class="info-label">Username</div>
+            <div class="info-value">${data.username}</div>
+            
+            <div class="info-label" style="margin-top: 10px;">Email</div>
+            <div class="info-value">${data.email}</div>
+        `;
+
+        const roleBadge = document.getElementById("user-role-badge");
+        if (roleBadge) {
+            roleBadge.textContent = data.role;
+            roleBadge.className = `role-badge ${data.role.toLowerCase()}-role`;
         }
-        throw new Error("Failed to fetch profile data");
-    }   
-
-    const data = await response.json();
-
-    // Inject data with wireframe formatting
-    info.innerHTML = `
-        <div class="info-label">Username</div>
-        <div class="info-value">${data.username}</div>
-    
-        <div class="info-label" style="margin-top: 10px;">Email</div>
-        <div class="info-value">${data.email}</div>
-    `;
-
-    const roleBadge = document.getElementById("user-role-badge");
-    if (roleBadge) {
-        roleBadge.textContent = data.role;
-        roleBadge.className = `role-badge ${data.role.toLowerCase()}-role`;
-    }
-
-    // Total Positives
-    if (predictions_positive.ok) {
-        const pred = await predictions_positive.json();
-        document.getElementById("total_predictions").textContent = pred.meta.total_predictions;
-        document.getElementById("total_positives").textContent = pred.meta.totalItems;
-        document.getElementById("average_confidence").textContent = `${(pred.meta.average_confidence*100).toFixed(1)}%`; 
-    }
-    // Total Negatives
-    if (predictions_negative.ok) {
-        const pred = await predictions_negative.json();
-        document.getElementById("total_negatives").textContent = pred.meta.totalItems;
+        // Total Positives
+        if (predictions_positive.ok) {
+            const pred = await predictions_positive.json();
+            document.getElementById("total_predictions").textContent = pred.meta.total_predictions;
+            document.getElementById("total_positives").textContent = pred.meta.totalItems;
+            document.getElementById("average_confidence").textContent = `${(pred.meta.average_confidence * 100).toFixed(1)}%`; 
+        }
+        // Total Negatives
+        if (predictions_negative.ok) {
+            const pred = await predictions_negative.json();
+            document.getElementById("total_negatives").textContent = pred.meta.totalItems;
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -243,7 +246,7 @@ async function saveChanges() {
             fetchUserProfile();
             if (passwordInput) {
                 alert("Password changed, Login again")
-                logout();
+                redirectToLogin();
             }
         }
         else {
