@@ -125,3 +125,104 @@
     background: #e60707e8;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
+
+/* Mobile Header and Sidebar Drawer Toggle */
+.mobile-header {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: rgba(20, 11, 61, 0.65);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(195, 190, 216, 0.2);
+        padding: 0 20px;
+        z-index: 999;
+    }
+
+    .mobile-brand {
+        color: #ffffff;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hamburger-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        color: #ffffff;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        box-shadow: none;
+        transition: all 0.2s ease;
+    }
+
+    .hamburger-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #60a5fa;
+    }
+
+    .hamburger-btn svg {
+        stroke: currentColor;
+        stroke-width: 2.5px;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px; /* Collapsed */
+        width: 280px;
+        height: 100vh;
+        z-index: 1001;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 0 24px 24px 0;
+        background: rgba(16, 12, 48, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .sidebar.open {
+        left: 0; /* Open drawer */
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}

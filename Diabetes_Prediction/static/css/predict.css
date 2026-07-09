@@ -295,4 +295,43 @@ button:hover {
 #clear-btn:hover {
     background: #e61212; 
     box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+/* Responsive adjustments for predict page */
+@media (max-width: 992px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-y: auto;
+        padding-top: 80px; /* Offset for mobile header */
+    }
+
+    .predict-container {
+        position: relative;
+        width: 90%;
+        max-height: none;
+        margin: 20px auto;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-y: visible;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .predict-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
 }   

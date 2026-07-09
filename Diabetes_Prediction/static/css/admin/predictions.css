@@ -4,46 +4,16 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-image: url("../../images/Background.jpg");    
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.predictions-container {
-    background: rgba(195, 190, 216, 0.15);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(195, 190, 216, 0.2);
-    color: #e2e8f0;
-    width: 60%;
-    max-height: 88vh;
-    padding: 30px;
-    border-radius: 24px;
-    display: flex;
-    flex-direction: column;
-}
 .select-wrapper {
     position: relative;
-    width: 30%;
-    margin-bottom: -3%;
-    margin-left: 68%;
-    transform: translateY(-150%);
     display: flex;
     justify-content: flex-end;
-    align-items: center
+    align-items: center;
 }
 
 select {
-    width: 50%;
-    padding: 6px 0px 6px 20px;
+    width: 120px;
+    padding: 6px 25px 6px 12px;
     border-radius: 16px;
     font-size: 12px;
     color: #ffffff;
@@ -186,10 +156,7 @@ select:focus {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
-#search-username {
-    transform: translateY(-220%);
-    margin-bottom: -40%;
-}
+
 
 .predictions-table {
     border-collapse: separate;
@@ -215,4 +182,45 @@ select:focus {
   tr:last-child td:last-child {
     border-bottom-right-radius: 15px;
   }
+
+/* Responsive adjustments for predictions section */
+@media (max-width: 992px) {
+    #search-username {
+        transform: none !important;
+        margin-bottom: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+    .select-wrapper {
+        position: static !important;
+        width: auto !important;
+        margin-left: 0 !important;
+        margin-bottom: 0 !important;
+        transform: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+    }
+    .select-wrapper::after {
+        content: "";
+    }
+    .predictions-toolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 15px !important;
+    }
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .predictions-table th, .predictions-table td {
+        padding: 10px 8px !important;
+        font-size: 0.8rem;
+    }
+    #prev-btn, #next-btn {
+        width: auto !important;
+        padding: 8px 16px !important;
+    }
+}
   

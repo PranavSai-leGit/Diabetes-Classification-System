@@ -96,7 +96,7 @@ document.getElementById("register-form").addEventListener("submit", async (e)=>{
         return;
     }
     if(response.ok){
-        window.location.replace("http://127.0.0.1:8000/login");
+        window.location.replace("/login");
     }
 
 });

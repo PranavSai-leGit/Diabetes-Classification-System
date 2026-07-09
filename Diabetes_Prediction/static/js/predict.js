@@ -32,7 +32,7 @@ document.getElementById("predict-form").addEventListener("submit", async (e) => 
     const token = localStorage.getItem("token");
 
     if(!token){
-        window.location.replace("http://127.0.0.1:8000/login");
+        window.location.replace("/login");
         alert("Not Authenticated")
         return;
     }

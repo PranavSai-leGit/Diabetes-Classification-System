@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         saveBtn.addEventListener("click", saveChanges);
     }
 
-    const logoutBtn = document.getElementById("logout-btn");
+    const logoutBtn = document.getElementById("profile-logout-btn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", logout);
     }
@@ -316,7 +316,12 @@ async function deleteAccount() {
                 redirectToLogin();
                 return;
             }
-            alert("Failed to delete account. Please try again.");
+            try {
+                const err = await res.json();
+                alert(err.detail || "Failed to delete account. Please try again.");
+            } catch (jsonErr) {
+                alert("Failed to delete account. Please try again.");
+            }
         }
     } catch (e) {
         console.error(e);

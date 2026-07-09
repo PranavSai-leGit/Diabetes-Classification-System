@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/admin/sidebar.css">
+    <link rel="stylesheet" href="/static/css/admin/sidebar.css">
 
 </head>
 <body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <button id="hamburger-toggle" class="hamburger-btn" type="button" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+        </button>
+        <span class="mobile-brand">Diabetes Prediction</span>
+    </div>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
     <div class="sidebar">
 
         <h1>Diabetes Prediction System</h1>
@@ -40,6 +55,6 @@
         </div>
 
     </div>
-        <script src="../../static/js/admin/sidebar.js"></script>
+        <script src="/static/js/admin/sidebar.js"></script>
     </body>
 </html>       

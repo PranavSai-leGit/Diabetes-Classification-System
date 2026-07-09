@@ -363,3 +363,12 @@ button:hover {
     letter-spacing: 3px;
     font-weight: 500;
 }
+@media (max-width: 768px) {
+    .title-card-content {
+        display: none;
+    }    
+    .title-card-container {
+        padding: 5%;
+        margin-top: -10%;
+    }
+}

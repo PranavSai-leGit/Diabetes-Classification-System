@@ -1,55 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../static/css//sidebar.css">
 
-    </head>
-    <body>
-        <div class="sidebar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/sidebar.css">
 
-            <h1>Diabetes Prediction System</h1>
+</head>
 
-            <div class="menu">
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <button id="hamburger-toggle" class="hamburger-btn" type="button" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+        </button>
+        <span class="mobile-brand">Diabetes Prediction</span>
+    </div>
 
-                <a href="/home" class="sidebar-link">
-                    Home
-                </a>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-                <a href="/dashboard" class="sidebar-link">
-                    Dashboard
-                </a>
+    <div class="sidebar">
 
-                <a href="/predict" class="sidebar-link">
-                    Prediction
-                </a>
+        <h1>Diabetes Prediction System</h1>
 
-                <a href="/history_page" class="sidebar-link">
-                    History
-                </a>
+        <div class="menu">
 
-                <a href="/profile_page" class="sidebar-link">
-                    Profile
-                </a>
+            <a href="/home" class="sidebar-link">
+                Home
+            </a>
 
-                <button id="logout-btn" type="button">
-                    Logout
-                </button>
+            <a href="/dashboard" class="sidebar-link">
+                Dashboard
+            </a>
 
-            </div>
+            <a href="/predict" class="sidebar-link">
+                Prediction
+            </a>
+
+            <a href="/history_page" class="sidebar-link">
+                History
+            </a>
+
+            <a href="/profile_page" class="sidebar-link">
+                Profile
+            </a>
+
+            <button id="logout-btn" type="button">
+                Logout
+            </button>
 
         </div>
-        <script src="../../static/js/sidebar.js"></script>
-    </body>
-</html>       
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+    </div>
+    <script src="/static/js/sidebar.js"></script>
+</body>
+
+</html>

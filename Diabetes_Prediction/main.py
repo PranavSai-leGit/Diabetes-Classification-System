@@ -73,6 +73,24 @@ app.mount(
 # Creating new table with metadata from basemodel
 Base.metadata.create_all(bind=engine)
 
+# Seed default admin if no users exist
+db_session = Session(bind=engine)
+try:
+    if db_session.query(User).count() == 0:
+        default_admin = User(
+            username="admin",
+            email="admin@gmail.com",
+            password_hash=hash_password("Password123"),
+            role="admin"
+        )
+        db_session.add(default_admin)
+        db_session.commit()
+        print("Default admin created successfully: admin@gmail.com / Password123")
+except Exception as e:
+    print("Error seeding database:", e)
+finally:
+    db_session.close()
+
 @app.get("/", tags=["Auth"])
 def landing_page(request: Request):
 
@@ -344,20 +362,43 @@ def delete_profile(
     """
     Delete the current user's account.
     """
+    # Prevent deleting the last remaining admin account
+    if current_user.role == "admin":
+        admin_count = db.query(User).filter(User.role == "admin").count()
+        if admin_count <= 1:
+            raise HTTPException(
+                status_code=400,
+                detail="Cannot delete the only remaining admin account."
+            )
+
+    user_id = current_user.id
     username_to_log = current_user.username
     email_to_log = current_user.email
-    user_id = current_user.id
 
-    log_entry = ActivityLog(
-        user_id=user_id,
-        action="delete_user",
-        entity_type="User",
-        entity_id=user_id,
-        details={"deleted_username": username_to_log, "deleted_email": email_to_log, "self_delete": True}
-    )
-    db.add(log_entry)
+    # Delete referencing predictions and logs to satisfy foreign key constraints
+    db.query(Prediction).filter(Prediction.user_id == user_id).delete()
+    db.query(ActivityLog).filter(ActivityLog.user_id == user_id).delete()
+
     db.delete(current_user)
     db.commit()
+
+    # Log self-deletion inside activity_logs table under an admin user ID to satisfy foreign key constraints
+    system_admin = db.query(User).filter(User.role == "admin").first()
+    if system_admin:
+        log_entry = ActivityLog(
+            user_id=system_admin.id,
+            action="delete_user",
+            entity_type="User",
+            entity_id=user_id,
+            details={
+                "deleted_username": username_to_log,
+                "deleted_email": email_to_log,
+                "self_delete": True
+            }
+        )
+        db.add(log_entry)
+        db.commit()
+
     return
 
 
@@ -528,6 +569,10 @@ def delete_user(
 
     username_to_log = user.username
     email_to_log = user.email
+
+    # Delete referencing predictions and logs to satisfy foreign key constraints
+    db.query(Prediction).filter(Prediction.user_id == user_id).delete()
+    db.query(ActivityLog).filter(ActivityLog.user_id == user_id).delete()
 
     log_entry = ActivityLog(
         user_id=current_admin.id,

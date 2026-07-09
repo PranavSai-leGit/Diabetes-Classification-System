@@ -52,10 +52,10 @@ class User(Base):
         default=datetime.utcnow
     )
     predictions = relationship(
-    "Prediction",
-    back_populates="user",
-    cascade="all, delete"
-    )  
+        "Prediction",
+        back_populates="user",
+        cascade="all, delete"
+    )
 
 class Prediction(Base):
 
@@ -106,7 +106,7 @@ class ActivityLog(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     # Who performed the action? (Could be a regular user, or an admin)
-    user_id = Column(Integer, ForeignKey("users.id"),
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"),
                      nullable=False, index=True)
 
     # What did they do? (e.g., "user_login", "delete_prediction", "export_data")

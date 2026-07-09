@@ -212,3 +212,62 @@ select:focus {
   tr:last-child td:last-child {
     border-bottom-right-radius: 15px;
   }
+
+/* Responsive adjustments for history page */
+@media (max-width: 992px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-y: auto;
+        padding-top: 80px; /* Offset for mobile header */
+    }
+
+    .history-container {
+        position: relative;
+        width: 90%;
+        max-height: none;
+        margin: 20px auto;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-y: visible;
+        padding: 20px;
+    }
+
+    .select-wrapper {
+        position: static;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 20px;
+        transform: none;
+        justify-content: center;
+    }
+
+    .select-wrapper select {
+        width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .history-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .history-table th, .history-table td {
+        padding: 8px 6px;
+        font-size: 0.8rem;
+    }
+
+    #prev-btn, #next-btn {
+        width: auto !important;
+        padding: 8px 16px !important;
+    }
+}
