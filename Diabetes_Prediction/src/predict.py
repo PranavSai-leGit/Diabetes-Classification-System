@@ -1,13 +1,19 @@
 import joblib
-from preprocessing import (
+from pathlib import Path
+from src.preprocessing import (
     handling_outliers,
     handle_missing_values,
     feature_engineering,
     encode_features
 )
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-model = joblib.load(r"Diabetes_Prediction\models\diabetes_model.pkl")
-feature_columns = joblib.load("Diabetes_Prediction/models/feature_columns.pkl")
+MODEL_PATH = BASE_DIR / "artifacts" / "diabetes_model.pkl"
+FEATURE_COLUMNS_PATH = BASE_DIR / "artifacts" / "feature_columns.pkl"
+
+
+model = joblib.load(MODEL_PATH)
+feature_columns = joblib.load(FEATURE_COLUMNS_PATH)
 
 
 def preprocess_prediction_data(df):
@@ -36,12 +42,12 @@ def predict(df):
     processed_data = preprocess_prediction_data(df)
 
     # Model predicions
-    probability = model.predict_proba(processed_data)[:, 1]
-    prediction = (probability >= 0.25).astype(int)
+    probability = model.predict_proba(processed_data)
+    prediction = int(probability[0][1] >= 0.25)
 
     return {
-        "prediction": int(prediction[0]),
-        "probability": float(probability[0])
+        "prediction": "Diabetic" if prediction == 1 else "Non-Diabetic",
+        "confidence": float(probability[0][prediction])
     }
 
 

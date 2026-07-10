@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/profile.css') }}">
+
+    <title>Profile</title>
+</head>
+
+<body>
+    <!--Check for token-->
+    <script src="{{ url_for('static', path='js/admin/auth-guard.js') }}"></script>
+
+    {% include "admin/sidebar.html" %}
+
+    <div class="profile-container">
+
+        <h1 class="profile-title">Profile</h1>
+
+        <div class="profile-grid">
+        
+            <div class="left-column">
+                <div id="details-container" class="glass-card" style="height: 50%;">
+                    <div class="avatar-container" style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 100px;">
+                        <img class="profile-pic" src="{{ url_for('static', path='images/Profile-icon.webp') }}" alt="Profile Picture" style="margin-bottom: 0;">
+                        <span id="user-role-badge" class="role-badge">--</span>
+                    </div>
+                <div id="profile-info" class="profile-info-block"></div>
+            </div>
+
+            <div class="glass-card">
+                <h2>Account Settings</h2>
+                <div id="settings-error" style="color: #f87171; font-size: 0.9rem; margin-bottom: 15px; text-align: center; display: none;"></div>
+                <div class="settings-form"> 
+
+                    <div class="settings-group">
+                        <label for="settings-username" class="settings-label">New Username</label>
+                        <input type="text" id="settings-username" class="settings-input" placeholder="New username">
+                    </div>
+
+                    <div class="settings-group" style="margin-top: 15px;">
+                        <label for="settings-email" class="settings-label">New Email</label>
+                        <input type="email" id="settings-email" class="settings-input" placeholder="New email">
+                    </div>
+
+                    <div class="settings-group" style="margin-top: 15px;">
+                        <label for="settings-password" class="settings-label">New Password</label>
+                        <div class="password-wrapper" style="position: relative; width: 100%;">
+                            <input 
+                            type="password" 
+                            id="settings-password" 
+                            class="settings-input" 
+                            minlength="8"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            placeholder="New password (min 8 chars)">
+                    
+                            <button id="toggle" class="icon-button" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94a3b8; outline: none; display: flex; align-items: center; justify-content: center; padding: 0;">
+                                <span id="vis" class="material-symbols-outlined" style="font-size: 20px;">
+                                    visibility_off
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            
+            <div class="glass-card">
+                <h2>Account Statistics</h2>
+                <div class="status-list">
+
+                    <div class="status-item">
+                        <span class="status-label">Total Predictions</span>
+                        <span id="total_predictions" class="status-value"></span>
+                    </div>
+
+                    <div class="status-item">
+                        <span class="status-label">Positive</span>
+                        <span id="total_positives" class="status-value" style="color: #0ee40eb7;"></span>
+                    </div>
+
+                    <div class="status-item">
+                        <span class="status-label">Negative</span>
+                        <span id="total_negatives" class="status-value" style="color: #f11d1db2;"></span>
+                    </div>
+
+                    <div class="status-item">
+                        <span class="status-label">Average Confidence</span>
+                        <span id="average_confidence" class="status-value"></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="glass-card action-card">
+                <button class="action-btn btn-primary" id="save-changes-btn">Save Changes</button>
+                <button class="action-btn btn-secondary" id="profile-logout-btn" style="margin-top: 0%;">Logout</button>
+                <button class="action-btn btn-danger" id="delete-account-btn">Delete Account</button>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+        <script src="{{ url_for('static', path='js/admin/profile.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-image: url("../../images/Background.jpg");    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.users-container {
+    background: rgba(195, 190, 216, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    color: #e2e8f0;
+    width: 70%;
+    height: 95%;
+    max-height: 88vh;
+    padding: 30px;
+    border-radius: 24px;
+    margin-left: 20%;
+    margin-right: 2%;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+.select-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+select {
+    width: 50%;
+    padding: 6px 0px 6px 20px;
+    border-radius: 16px;
+    font-size: 12px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+    appearance: none; /* Strip standard OS graphics */
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 2%;
+
+}
+
+select:focus {
+    border-color: #60a5fa;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Custom CSS Clean Dropdown Arrow pointer */
+.select-wrapper::after {
+    content: "▾";
+    font-size: 14px;
+    color: #b0b6bd;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.select-wrapper option {
+    color: #d7dbe0;
+    background-color: #0c2c50;
+
+}
+
+.users-title {
+    text-align: center;
+    color: #d1c7c7;
+    margin-bottom: 25px;
+    font-size: 2rem;
+}
+
+/* Table Styling */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.users-table th, 
+.users-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.users-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(5px);
+    background-color: #c3cbd62d;
+    text-align: center;
+}
+
+.users-table tr:hover td {
+    background: rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+}
+.users-toolbar {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    width: 100%;
+    transform: translateY(-100%);
+    margin-bottom: -3%;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-safe {
+    background: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+#loading-message {
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+    color: #94a3b8;
+}
+#pagination-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 2%;
+    gap: 2%;
+}
+#prev-btn {
+    width: 12%;
+    padding: 14px;
+    border-radius: 16px;
+    background: #2563eb;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.2s ease;
+}
+#next-btn {
+    width: 12%;
+    padding: 14px;
+    border-radius: 16px;
+    background: #2563eb;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.2s ease;
+}
+
+#prev-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+#next-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+.users-table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  /* Top-left corner */
+  tr:first-child th:first-child {
+    border-top-left-radius: 15px;
+  }
+  
+  /* Top-right corner */
+  tr:first-child th:last-child {
+    border-top-right-radius: 15px;
+  }
+  
+  /* Bottom-left corner */
+  tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+  }
+  
+  /* Bottom-right corner */
+  tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+  }
+
+/* Responsive adjustments for admin users list */
+@media (max-width: 992px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-y: auto;
+        padding-top: 80px; /* Offset for mobile header */
+    }
+
+    .users-container {
+        position: relative;
+        width: 90%;
+        max-height: none;
+        margin: 20px auto;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-y: visible;
+        padding: 20px;
+        height: auto;
+    }
+
+    .users-toolbar {
+        transform: none !important;
+        margin-bottom: 15px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .search-wrapper input {
+        width: 100% !important;
+    }
+
+    .select-wrapper {
+        justify-content: flex-start !important;
+    }
+    .select-wrapper::after {
+        content: "";
+    }
+}
+
+@media (max-width: 768px) {
+    .users-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .select-wrapper::after {
+        content: "";
+    }
+    .users-table th, .users-table td {
+        padding: 10px 8px !important;
+        font-size: 0.8rem;
+    }
+
+    #pagination-controls button {
+        width: auto !important;
+        padding: 8px 16px !important;
+    }
+}

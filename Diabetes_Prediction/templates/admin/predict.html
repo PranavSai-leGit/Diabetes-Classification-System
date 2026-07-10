@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+        <link rel="stylesheet" href="../../static/css/predict.css">
+
+        <title>Admin - Prediction Page</title>
+    </head>
+
+    <body>
+        <!--Check for token-->
+        <script src="{{ url_for('static', path='js/admin/auth-guard.js') }}"></script>
+
+        {% include "admin/sidebar.html" %}
+
+        <div class="predict-container">
+            <h1 class="predict-title">Predict</h1>
+            <form id="predict-form">
+
+                <div class="input-group">
+                    <label for="gender" class="field-label">Gender</label>
+                    <div class="select-wrapper">
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected hidden>Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="age" class="field-label">Age</label>
+                    <div class="input-box">
+                        <input 
+                        id="age" 
+                        type="number" 
+                        min="1" 
+                        max="120" 
+                        oninput="if(this.value.length > 3) this.value = this.value.slice(0, 3);" 
+                        step="1" 
+                        placeholder="Enter age" 
+                        required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="field-label">Hypertension</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="hypertension" 
+                            value="1" 
+                            required>
+                            <span class="custom-radio"></span> Yes
+                        </label>
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="hypertension" 
+                            value="0">
+                            <span class="custom-radio"></span> No
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="field-label">Heart Disease</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="heart_disease" 
+                            value="1" 
+                            required>
+                            <span class="custom-radio"></span> Yes
+                        </label>
+                        <label class="radio-label">
+                            <input 
+                            type="radio" 
+                            name="heart_disease" 
+                            value="0">
+                            <span class="custom-radio"></span> No
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="smoking_history" class="field-label">Smoking History</label>
+                    <div class="select-wrapper">
+                        <select id="smoking_history" name="smoking_history" required>
+                            <option value="" disabled selected hidden>Select history</option>
+                            <option value="current">Current</option>
+                            <option value="former">Former</option>
+                            <option value="never">Never</option>
+                            <option value="not current">Not current</option>
+                            <option value="No Info">No Info</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="bmi" class="field-label">BMI</label>
+                    <div class="input-box">
+                        <input 
+                        id="bmi" 
+                        type="number" 
+                        min="10" 
+                        max="90" 
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^(\d{2})(\d)/, '$1.$2').slice(0, 4);"
+                        step="0.1" 
+                        placeholder="Enter BMI" 
+                        required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="HbA1c_level" class="field-label">HbA1c Level</label>
+                    <div class="input-box">
+                        <input 
+                        id="HbA1c_level" 
+                        type="number" 
+                        oninput="if(this.value.length > 3) this.value = this.value.slice(0, 3);" 
+                        step="0.1" 
+                        max="14"
+                        placeholder="Enter HbA1c level" 
+                        required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="blood_glucose_level" class="field-label">Blood Glucose Level</label>
+                    <div class="input-box">
+                        <input 
+                        id="blood_glucose_level" 
+                        type="number" 
+                        min="1" 
+                        max="800" 
+                        oninput="if(this.value.length > 3) this.value = this.value.slice(0, 3);" 
+                        step="1" 
+                        placeholder="Enter glucose level" 
+                        required>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <div class="button-group">
+                        <button id="predict-btn" type="submit">Predict</button>
+                        <button id="clear-btn" type="reset" style="background-color: rgba(224, 15, 15, 0.795) ">Clear</button>
+                    </div>
+                    <p id="error-message"></p>
+                    <div id="prediction" class="prediction-result" style="display: none;"></div>
+                </div>
+
+            </form>
+        </div>
+        <script src="../../static/js/admin/predict.js"></script>
+    </body>
+</html>

@@ -1,0 +1,372 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("../images/Background.jpg");
+    background-size: cover;
+    background-position: left;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    /* Center the form vertically on screen */
+}
+
+/* Container adjustments */
+.profile-container {
+    background: rgba(195, 190, 216, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    color: #e2e8f0;
+    width: 75%;
+    padding: 20px;
+    border-radius: 24px;
+    margin-left: 24%;
+    margin-right: 5%;
+    max-width: 1200px;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-container h1 {
+    color: #d1c7c7;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    margin-left: 2%;
+}
+
+/* Grid Layout */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.left-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Glass Card Reusable Style */
+.glass-card {
+    background: rgba(2, 12, 151, 0.233);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(195, 190, 216, 0.2);
+    border-radius: 24px;
+    padding: 25px;
+    color: #e2e8f0;
+}
+
+.glass-card h2 {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+/* Details Container (Avatar & Text) */
+#details-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 25px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: -4px;
+}
+
+.info-value {
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Status/Stats List */
+.status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.status-label {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.status-value {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Buttons */
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-btn,
+.action-btn {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 20px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.settings-btn {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.action-btn {
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.4);
+    color: #fee2e2;
+}
+
+#toggle {
+    width: 15%;
+    right: 1px;
+    padding: 12px;
+    size: 50%;
+    border-radius: 100px;
+    box-shadow: none;
+    background-color: transparent;
+
+    transition: 0.2s;
+}
+
+.icon-button {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: none;
+    opacity: 0.5;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    opacity: 0.5;
+}
+
+.icon-right {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #666;
+    cursor: pointer;
+}
+
+/* Account Settings Form Inputs Styling */
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+
+}
+
+.settings-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.settings-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.settings-input:focus {
+    border-color: #60a5fa;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.2);
+}
+
+.settings-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Profile Role Badges */
+.role-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    margin-top: 4px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.user-role {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.admin-role {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive adjustments for profile page */
+@media (max-width: 992px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-y: auto;
+        padding-top: 80px;
+        /* Offset for mobile header */
+    }
+
+    .profile-container {
+        position: relative;
+        width: 90%;
+        max-height: none;
+        margin: 20px auto;
+        margin-left: auto;
+        margin-right: auto;
+        overflow-y: visible;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .profile-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    .glass-card {
+        padding: 15px;
+    }
+
+    #details-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+        height: auto !important;
+    }
+}

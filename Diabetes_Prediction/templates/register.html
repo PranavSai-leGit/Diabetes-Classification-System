@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <link rel="stylesheet" href="../static/css/auth.css">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+    
+    <title>Register Page</title>
+
+</head>
+
+<body>
+    <div class="title-card-container">
+        <div class="title-card-content">
+            <div class="icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+            </div>
+            <h1>Diabetes Prediction System</h1>
+            <p>Early Detection & Data-Driven Risk Assessment</p>
+        </div>
+    <div class="register-container">
+        <h1 class="register-title">Register</h1>
+        <form id="register-form">
+            <div class="input-box">
+                <span class="material-symbols-outlined icon">
+                    person
+                </span>
+                <input 
+                id="username"
+                type="text"
+                minlength="3"
+                maxlength="16"
+                placeholder="Username"
+                required>
+
+            </div>
+
+            <div class="input-box">
+                <span class=" material-symbols-outlined icon">
+                    mail
+                </span>
+                <input
+                id="email"
+                type="email"
+                placeholder="Email ID"
+                required>
+
+            </div>
+            <div class="input-box">
+
+                <span class="material-symbols-outlined icon">
+                    password
+                </span>
+
+                <input
+                id="password"
+                type="password"
+                minlength="8"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+                placeholder="Password"
+                required>
+
+                <button id="toggle" class="icon-button" type="button">
+                    <span id="vis" class="material-symbols-outlined icon-right">
+                        visibility_off
+                    </span>
+                </button>
+            </div>
+            <div class="input-box">
+
+                <span class="material-symbols-outlined icon">
+                    password
+                </span>
+
+                <input
+                id="confirm-password"
+                type="password"
+                placeholder="Confirm Password"
+                required>
+
+                <button id="toggle_2" class="icon-button" type="button">
+                    <span id="vis_2" class="material-symbols-outlined icon-right">
+                        visibility_off
+                    </span>
+                </button>
+            </div>
+            <div class="password-info">
+                <button id="info" type="button">
+                <span class="material-symbols-outlined icon">
+                    info
+                </span>
+                </button>
+                <p>Password constraints</p>
+                    <div class="tooltip">
+                        Password must:<br>
+                        • Be at least 8 characters<br>
+                        • Contain a number<br>
+                        • Contain a lowercase letter<br>
+                        • Contain an uppercase letter
+                    </div>
+            </div>
+
+                <button type="submit">
+                    Sign Up
+                </button>
+                <p id="error-message"></p>
+                <p class="signup-text">Already have an account?
+                    <a href="login">Sign in</a>
+                </p>
+
+        </form>
+    </div>
+    </div>
+    <script src="../static/js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+        <link rel="stylesheet" href="../static/css/home.css">
+
+        <title>Home Page</title>
+    </head>
+
+    <body>
+        <!--Check for token-->
+        <script src="{{ url_for('static', path='js/user-guard.js') }}"></script>
+
+        {% include "components/sidebar.html" %}
+
+        <div class="home-container">
+
+            <!-- Welcome Header -->
+            <h1 id="welcome-msg" class="home-title">Welcome...</h1>
+
+            <!-- ROW 1: About Diabetes & Global Diabetes Analytics -->
+            <div class="home-bottom-row" style="margin-top: 0; margin-bottom: 25px;">
+                <!-- About Diabetes (Tabs) -->
+                <div class="glass-card" style="flex: 1.5; min-width: 400px; padding: 25px;">
+                    <h2 style="font-size: 1.25rem; margin-bottom: 12px;">About Diabetes</h2>
+                    
+                    <!-- Tabs buttons -->
+                    <div class="tabs-header" style="display: flex; gap: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 15px; padding-bottom: 5px;">
+                        <button onclick="switchTab('symptoms')" id="tab-btn-symptoms" class="tab-button active" style="background: none; border: none; color: #60a5fa; font-weight: bolder; padding: 8px 12px; cursor: pointer; font-size: 0.95rem; box-shadow: none; width: auto; border-bottom: 2px solid #60a5fa; border-radius: 20px;">Symptoms</button>
+                        <button onclick="switchTab('prevention')" id="tab-btn-prevention" class="tab-button" style="background: none; border: none; color: #94a3b8; font-weight: bolder; padding: 8px 12px; cursor: pointer; font-size: 0.95rem; box-shadow: none; width: auto; border-bottom: 2px solid transparent; border-radius: 20px;">Prevention</button>
+                        <button onclick="switchTab('risk-factors')" id="tab-btn-risk-factors" class="tab-button" style="background: none; border: none; color: #94a3b8; font-weight: bolder; padding: 8px 12px; cursor: pointer; font-size: 0.95rem; box-shadow: none; width: auto; border-bottom: 2px solid transparent; border-radius: 20px;">Risk Factors</button>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div id="tab-content-symptoms" class="tab-content" style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; display: block;">
+                        Common symptoms include:
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>Frequent urination (polyuria)</li>
+                            <li>Increased thirst (polydipsia) and hunger</li>
+                            <li>Extreme fatigue and blurry vision</li>
+                            <li>Unexplained weight loss</li>
+                            <li>Slow-healing sores or cuts</li>
+                        </ul>
+                    </div>
+                    <div id="tab-content-prevention" class="tab-content" style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; display: none;">
+                        Key preventative steps:
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>Engage in 150+ minutes of moderate weekly exercise</li>
+                            <li>Eat a nutrient-dense diet low in sugar and refined carbs</li>
+                            <li>Maintain a healthy weight and BMI</li>
+                            <li>Stay well hydrated throughout the day</li>
+                            <li>Get regular blood screenings for early detection</li>
+                        </ul>
+                    </div>
+                    <div id="tab-content-risk-factors" class="tab-content" style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; display: none;">
+                        Primary risk factors:
+                        <ul style="margin-left: 20px; margin-top: 8px;">
+                            <li>Family history or genetics</li>
+                            <li>Sedentary lifestyle (lack of regular exercise)</li>
+                            <li>Age (risk increases over 45)</li>
+                            <li>High blood pressure or cholesterol</li>
+                            <li>History of gestational diabetes during pregnancy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Global Diabetes Analytics -->
+                <div class="glass-card global-analytics" style="flex: 1; min-width: 300px;">
+                    <h2>Global Diabetes Analytics</h2>
+                    <div class="stat-group">
+                        <div class="stat-labels">
+                            <span>Global Adult Prevalence</span>
+                            <span>11.1%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 11.1%; background: #ef4444;"></div>
+                        </div>
+                        <p class="stat-caption">~589 million adults are living with diabetes worldwide.</p>
+                    </div>
+
+                    <div class="stat-group">
+                        <div class="stat-labels">
+                            <span>Undiagnosed Cases</span>
+                            <span>44.7%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 44.7%; background: #eab308;"></div>
+                        </div>
+                        <p class="stat-caption">Almost half of all adults with diabetes remain undiagnosed.</p>
+                    </div>
+
+                    <div class="stat-group">
+                        <div class="stat-labels">
+                            <span>Preventable Type 2 Cases</span>
+                            <span>80.0%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 80%; background: #22c55e;"></div>
+                        </div>
+                        <p class="stat-caption">Through diet, exercise, and early monitoring.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2: Top Feature Importance (Full Width) -->
+            <div class="glass-card global-analytics" style="width: 100%; margin-bottom: 25px;">
+                <h2>Top Feature Importance</h2>
+                <p class="stat-caption" style="margin-bottom: 15px;">The weight of each health indicator used by the algorithm to make a prediction.</p>
+                
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>Blood Glucose Level</span>
+                        <span>41.9%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 41.9%; background: #ef4444;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>HbA1c Level</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 40%; background: #f97316;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>Age</span>
+                        <span>25.8%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 25.8%; background: #eab308;"></div>
+                    </div>
+                </div>
+
+                <div class="stat-group">
+                    <div class="stat-labels">
+                        <span>BMI</span>
+                        <span>21.4%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: 21.4%; background: #3b82f6;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3: Today's Health Tip (Full Width) -->
+            <div class="glass-card" style="width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 25px; margin-bottom: 25px;">
+                <h2 style="font-size: 1.25rem; margin-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px;">
+                    Today's Health Tip
+                </h2>
+                <p id="health-tip-text" style="font-size: 1.05rem; line-height: 1.5; color: #e2e8f0; font-weight: 500; min-height: 40px; margin: 0;">
+                    Stay physically active for at least 30 minutes daily.
+                </p>
+            </div>
+
+            <!-- ROW 4: Quick Actions (4 per row, border-radius 20px) -->
+            <div class="action-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px;">
+                <a href="/predict" class="action-card glass-card" style="text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; height: 50px; border-radius: 20px;">
+                    <span style="font-size: 1.1rem; font-weight: bold; color: #ffffff;">New Prediction</span>
+                </a>
+                <a href="/history_page" class="action-card glass-card" style="text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; height: 50px; border-radius: 20px;">
+                    <span style="font-size: 1.1rem; font-weight: bold; color: #ffffff;">History</span>
+                </a>
+                <a href="/profile_page" class="action-card glass-card" style="text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; height: 50px; border-radius: 20px;">
+                    <span style="font-size: 1.1rem; font-weight: bold; color: #ffffff;">Profile</span>
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <footer style="margin-top: 30px; text-align: center; font-size: 0.85rem; color: #94a3b8; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 15px;">
+                &copy; 2026 Diabetes Prediction System. All rights reserved.
+            </footer>
+
+        </div>
+
+        <!-- Custom JS logic -->
+        <script>
+            // Switch tabs inside About Diabetes section
+            function switchTab(tabId) {
+                // Hide all contents
+                document.querySelectorAll(".tab-content").forEach(el => el.style.display = "none");
+                
+                // Show selected content
+                document.getElementById(`tab-content-${tabId}`).style.display = "block";
+                
+                // Deactivate all tab buttons styling
+                document.querySelectorAll(".tab-button").forEach(btn => {
+                    btn.style.color = "#94a3b8";
+                    btn.style.borderBottom = "2px solid transparent";
+                    btn.style.fontWeight = "500";
+                });
+                
+                // Activate clicked button styling
+                const clickedBtn = document.getElementById(`tab-btn-${tabId}`);
+                clickedBtn.style.color = "#60a5fa";
+                clickedBtn.style.borderBottom = "2px solid #60a5fa";
+                clickedBtn.style.fontWeight = "bold";
+            }
+
+            // Load logged in username and rotation of health tips
+            document.addEventListener("DOMContentLoaded", async () => {
+                const token = localStorage.getItem("token");
+                if (token) {
+                    try {
+                        const res = await fetch("/profile", {
+                            headers: {
+                                "Authorization": `Bearer ${token}`
+                            }
+                        });
+                        if (res.ok) {
+                            const data = await res.json();
+                            document.getElementById("welcome-msg").textContent = `Welcome ${data.username}`;
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+
+                // Health Tip List
+                const tips = [
+                    "Stay physically active for at least 30 minutes daily.",
+                    "Choose fiber-rich foods like whole grains, beans, and vegetables.",
+                    "Limit sugar-sweetened beverages and drink plenty of water.",
+                    "Monitor your portion sizes to prevent weight gain and spike risks.",
+                    "Incorporate strength training at least twice a week to build muscle tissue.",
+                    "Prioritize regular quality sleep (7-8 hours) to reduce insulin resistance."
+                ];
+                // Select random tip
+                const randomTip = tips[Math.floor(Math.random() * tips.length)];
+                document.getElementById("health-tip-text").textContent = randomTip;
+            });
+        </script>
+    </body>
+</html>

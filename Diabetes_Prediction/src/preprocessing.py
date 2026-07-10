@@ -1,5 +1,6 @@
-from utils import load_data
+from src.utils import load_data
 from sklearn.preprocessing import OneHotEncoder
+from pathlib import Path
 
 import pandas as pd
 import joblib
@@ -69,13 +70,15 @@ def encode_features(df, fit=True):
 
         joblib.dump(
             encoder,
-            "Diabetes_Prediction/models/encoder.pkl"
+            r"Diabetes_Prediction/artifacts/encoder.pkl"
         )
 
     else:
+        BASE_DIR = Path(__file__).resolve().parent.parent
+        ENCODER_PATH = BASE_DIR / "artifacts" / "encoder.pkl"
 
         encoder = joblib.load(
-            "Diabetes_Prediction/models/encoder.pkl"
+            ENCODER_PATH
         )
 
         encoded = encoder.transform(
@@ -141,7 +144,7 @@ def save_processed_data(df):
 
     os.makedirs("Data/Processed", exist_ok=True)
 
-    df.to_csv("Diabetes_Prediction\data\Processed\processed_data.csv", index=False)
+    df.to_csv(r"Diabetes_Prediction\data\Processed\processed_data.csv", index=False)
 
 
 # Master Function
@@ -167,7 +170,7 @@ def preprocess_data(df, target_column):
 
     joblib.dump(
         X.columns.tolist(),
-        "Diabetes_Prediction/models/feature_columns.pkl"
+        r"Diabetes_Prediction/artifacts/feature_columns.pkl"
     )
 
     return X, y

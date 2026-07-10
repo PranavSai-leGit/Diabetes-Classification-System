@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='images/favicon.png') }}">
+    <link rel="stylesheet" href="../../static/css/admin/users.css">
+
+    <title>Users</title>
+    <style>
+        /* Hide scrollbars globally for this layout */
+        .users-container::-webkit-scrollbar,
+        .table-wrapper::-webkit-scrollbar {
+            display: none !important;
+        }
+        .users-container,
+        .table-wrapper {
+            -ms-overflow-style: none !important;  /* IE and Edge */
+            scrollbar-width: none !important;  /* Firefox */
+            overflow-y: auto !important;
+        }
+            
+        /* Custom trash icon hover styling */
+        .delete-user-btn {
+            background: none;
+            border: none;
+            padding: 8px;
+            color: #ef4444;
+            cursor: pointer;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .delete-user-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!--Check for token-->
+    <script src="{{ url_for('static', path='js/admin/auth-guard.js') }}"></script>
+
+    {% include "admin/sidebar.html" %}
+
+    <div class="users-container" style="max-height: 90vh; display: flex; flex-direction: column;">
+
+        <h1 class="users-title">Users</h1>
+        <div class="users-toolbar">
+
+            <div class="search-wrapper" style="display: flex; align-items: center; gap: 10px;">
+                <label for="search-username"><strong></strong></label>
+                <input 
+                type="text" 
+                id="search-username" 
+                placeholder="Type username..." 
+                oninput="handleSearch()" 
+                style="padding: 10px 15px; border-radius: 20px; border: 1px solid rgba(116, 118, 184, 0.589); background: rgba(56, 53, 53, 0.123); color: #ffffff; outline: none; font-size: 0.95rem; width: 200px;">
+            </div>
+
+            <!-- Override the select-wrapper absolute position style for clean flex behavior inside the toolbar -->
+            <div class="select-wrapper" >
+                <label for="status-filter"><strong>Role: </strong></label>
+                <select id="status-filter" onchange="applyFilter()" style="margin: 0; width: 120px; padding: 6px 12px;">
+                    <option value="All">All</option>
+                    <option value="User">User</option>  
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+        </div>
+
+            <div class="table-wrapper" style="flex: 1; margin-bottom: 15px;">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>S.no</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Created At</th>
+                            <th>Predictions</th>
+                            <th style="width: 60px;"></th> <!-- Empty column header for clean layout -->
+                        </tr>
+                    </thead>
+
+                    <tbody id="users-table-body"></tbody>
+                </table>
+            </div>
+
+            <div id="pagination-controls" style="margin: 0;">
+                <button id="prev-btn" onclick="changePage(-1)" style="padding: 10px; width: 100px;">Previous</button>
+                <span id="page-info">Page 1</span>
+                <button id="next-btn" onclick="changePage(1)" style="padding: 10px; width: 100px;">Next</button>
+            </div>
+
+            <p id="loading-message" style="display: none;">Loading users...</p>
+            <p id="error-message" style="color: #f87171; display: none; text-align: center; margin-top: 10px;"></p>
+        </div>
+
+        <script src="../../static/js/admin/users.js"></script>
+    </body>
+</html>
