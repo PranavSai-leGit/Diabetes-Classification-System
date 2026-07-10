@@ -116,8 +116,9 @@ select:focus {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 2%;
+    margin: 1.2%;
     gap: 2%;
+    margin-bottom: -0.8%;
 }
 #prev-btn {
     width: 12%;

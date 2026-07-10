@@ -711,57 +711,6 @@ def admin_dashboard_data(
     return data_for_admin_dashboard(db, current_admin)
 
 
-@app.get("/admin/analytics", tags=["Admin"])
-def admin_profile_page(request: Request):
-
-    return templates.TemplateResponse(
-        request=request,
-        name="admin/analytics.html",
-        context={}
-    )
-
-
-@app.get("/admin_analytics", tags=["Admin"])
-def user_analytics(
-    days: int = Query(7, description="Number of days to look back"),
-    current_admin=Depends(get_current_admin),
-    db: Session = Depends(get_db)
-):
-    """
-    Provides time-series data and deeper analytics for charts/graphs.
-    """
-    signups_by_date = (
-        db.query(
-            func.date(User.created_at).label("date"),
-            func.count(User.id).label("count")
-        )
-        .filter(User.created_at >= func.current_date() - days)
-        .group_by(func.date(User.created_at))
-        .order_by(func.date(User.created_at))
-        .all()
-    )
-
-    # Format the SQLAlchemy result into a clean list of dicts for JSON serialization
-    formatted_signups = [
-        {"date": str(row.date), "count": row.count} for row in signups_by_date]
-
-    # Example: Prediction success rate or distribution
-    prediction_distribution = (
-        db.query(Prediction.status, func.count(Prediction.id))
-        .group_by(Prediction.status)
-        .all()
-    )
-
-    formatted_distribution = {
-        status: count for status, count in prediction_distribution}
-
-    return {
-        "time_period_days": days,
-        "user_signups": formatted_signups,
-        "prediction_status_distribution": formatted_distribution
-    }
-
-
 @app.get("/admin/home-summary", tags=["Admin"])
 def get_admin_home_summary(
     db: Session = Depends(get_db),

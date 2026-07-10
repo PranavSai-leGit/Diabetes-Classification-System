@@ -30,13 +30,15 @@ function applyFilter() {
 }
 
 async function fetchHistory(page) {
-    tableBody = document.getElementById("history-table-body");
+    const tableBody = document.getElementById("history-table-body");
     const loadingMessage = document.getElementById("loading-message");
     const errorMessage = document.getElementById("error-message");
+    const paginationControls = document.getElementById("pagination-controls");
     const token = localStorage.getItem("token");
 
-        tableBody = document.getElementById("history-table-body");
-        tableBody.innerHTML = "";
+    tableBody.innerHTML = "";
+    errorMessage.style.display = "none";
+    errorMessage.textContent = "";
 
     try{
         
@@ -66,15 +68,19 @@ async function fetchHistory(page) {
         loadingMessage.style.display = "none";
 
         if (result.data.length === 0){
-            pagination = document.getElementById("pagination-controls");
-
-            pagination.textContent = "";
+            if (paginationControls) {
+                paginationControls.style.display = "none";
+            }
             errorMessage.textContent = "No past predictions found";
             errorMessage.style.display = "block";
             errorMessage.style.color = "#cbd5e1";
             errorMessage.style.textAlign = "center";
             errorMessage.style.margin = "10%";
             return;
+        }
+
+        if (paginationControls) {
+            paginationControls.style.display = "flex";
         }
         s_no = ((currentPage-1) * limit) + 1;
 

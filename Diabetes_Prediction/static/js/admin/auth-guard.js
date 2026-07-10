@@ -9,7 +9,7 @@
         }
 
         if (!token) {
-            redirectToLogin("Please log in.");
+            redirectToLogin("");
             return;
         }
 

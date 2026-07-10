@@ -39,28 +39,62 @@ diabetes_project/
 ├── security.py
 │
 ├── templates/
+│   ├── admin/
+│   │   ├── home.html
+│   │   ├── dashboard.html
+│   │   ├── users.html
+│   │   ├── predict.html
+│   │   ├── profile.html
+│   │   └── sidebar.html
 │   ├── components/
 │   │   └── sidebar.html
-│   ├── home.html
 │   ├── login.html
 │   ├── register.html
-│   └── predict.html
+│   ├── home.html
+│   ├── dashboard.html
+│   ├── predict.html
+│   ├── history.html
+│   └── profile.html
 │
 ├── static/
 │   ├── css/
+│   │   ├── admin/
+│   │   │   ├── home.html
+│   │   │   ├── dashboard.html
+│   │   │   ├── users.html
+│   │   │   ├── predict.html
+│   │   │   ├── profile.html
+│   │   │   └── sidebar.html
 │   │   ├── auth.css
+│   │   ├── home.css
+│   │   ├── dashboard.css
 │   │   ├── predict.css
+│   │   ├── history.css
+│   │   ├── profile.css
 │   │   └── sidebar.html
 │   │
 │   ├── images/
 │   │   ├── favicon.png
-│   │   └── Login.jpg
+│   │   ├── Profile-icon.webp
+│   │   └── Background.jpg
 │   │
 │   └── js/
+│       ├── admin/
+│       │   ├── auth-guard.js
+│       │   ├── dashboard.js
+│       │   ├── predictions.js
+│       │   ├── users.js
+│       │   ├── predict.js
+│       │   ├── profile.js
+│       │   └── sidebar.js
 │       ├── login.js
 │       ├── register.js
+│       ├── dashboard.js
 │       ├── predict.js
-│       └── sidebar.html
+│       ├── history.js
+│       ├── profile.js
+│       ├── user-guard.js
+│       └── sidebar.js
 │   
 ├── src/
 │   ├── predict.py
